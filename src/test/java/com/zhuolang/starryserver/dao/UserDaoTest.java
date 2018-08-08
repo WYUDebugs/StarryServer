@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class UserDaoTest {
 
-    @Autowired
-    private UserDao userDao;
+    //@Autowired
+    //private UserDao userDao;
 
     @Test
     public void addUserByPhonePsw() {
@@ -50,12 +50,12 @@ public class UserDaoTest {
 
     @Test
     public void updateUserByIdSelective() {
-        User user = new User();
-        user.setId(1);
-        user.setAddress("更新地址啦");
-        user.setAge(23);
-        user.setHeight("sdfdfsa");
-        System.out.println(userDao.findUserByPhone("1"));
-        //System.out.println(userDao.updateUserByIdSelective(user));
+//        User user = new User();
+//        user.setId(1);
+//        user.setAddress("更新地址啦");
+//        user.setAge(23);
+//        user.setHeight("sdfdfsa");
+//        System.out.println(userDao.findUserByPhone("1"));
+//        //System.out.println(userDao.updateUserByIdSelective(user));
     }
 }
