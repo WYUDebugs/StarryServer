@@ -56,6 +56,8 @@ controller一般只获取请求参数，返回结果，不进行复杂的数据�
 * 3、service调用dao层接口，读写数据库数据，进行复杂的数据处理，返回结果给controller层
 * 4、dao层读写数据库数据，返回读写结果
 
+![](images/微信截图_20180811105154.png)
+
 ### 例：
 请求链接：http://localhost:8080/user/findUserByPhone?phone=1
 访问后数据请求走向如下图，数据处理后controller返回处理结果（处理成json数据）
