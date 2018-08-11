@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 5.5.51 : Database - starry_db
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -262,6 +263,7 @@ CREATE TABLE `user_tab` (
   `typelabel` varchar(100) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   `phoneId` varchar(100) DEFAULT NULL,
+  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `phone` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
