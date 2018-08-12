@@ -7,17 +7,15 @@ public class User {
     private int id;//自增
     private String phone;//联系方式（登陆账号）
     private String password;
-    private String nickname;//昵称
     private String name;
     private int gender;//性别:男（0）女（1）
     private int age;
-    private String habit;//爱好
     private String birthday;//生日
-    private String job;//职业
-    private String address;
-    private String weigh;//体重
-    private String height;//身高
-    private String xingZuo;//星座
+    private String headimage;//头像
+    private String address;//地址
+    private String typelabel;//用户性格标签
+    private String PhoneId;//手机设备（推送用）
+    private String register_time;//注册时间
     private String signature;//个性签名
 
     public int getId() {
@@ -44,14 +42,6 @@ public class User {
         this.password = password;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getName() {
         return name;
     }
@@ -76,12 +66,12 @@ public class User {
         this.age = age;
     }
 
-    public String getHabit() {
-        return habit;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setHabit(String habit) {
-        this.habit = habit;
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public String getBirthday() {
@@ -92,12 +82,12 @@ public class User {
         this.birthday = birthday;
     }
 
-    public String getJob() {
-        return job;
+    public String getHeadimage() {
+        return headimage;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setHeadimage(String headimage) {
+        this.headimage = headimage;
     }
 
     public String getAddress() {
@@ -108,36 +98,28 @@ public class User {
         this.address = address;
     }
 
-    public String getWeigh() {
-        return weigh;
+    public String getTypelabel() {
+        return typelabel;
     }
 
-    public void setWeigh(String weigh) {
-        this.weigh = weigh;
+    public void setTypelabel(String typelabel) {
+        this.typelabel = typelabel;
     }
 
-    public String getHeight() {
-        return height;
+    public String getPhoneId() {
+        return PhoneId;
     }
 
-    public void setHeight(String height) {
-        this.height = height;
+    public void setPhoneId(String PhoneId) {
+        this.PhoneId = PhoneId;
     }
 
-    public String getXingZuo() {
-        return xingZuo;
+    public String getRegister_time() {
+        return register_time;
     }
 
-    public void setXingZuo(String xingZuo) {
-        this.xingZuo = xingZuo;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setRegister_time(String register_time) {
+        this.register_time = register_time;
     }
 
 }

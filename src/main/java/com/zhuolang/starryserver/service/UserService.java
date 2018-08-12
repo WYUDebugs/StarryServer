@@ -17,6 +17,14 @@ public interface UserService {
     User findUserByPhone(String phone);
 
     /**
+     * 通过id查询User信息
+     *
+     * @param id
+     * @return 查找成功返回User，没有则null
+     */
+    User findUserById(int id);
+
+    /**
      * 通过phone检验密码是否正确
      *
      * @param phone

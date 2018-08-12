@@ -32,6 +32,8 @@ public class BaseExceptionHandleAction {
     public ResultDto handleAndReturnData(Exception ex) {
         System.out.println("很好奇有没有执行到这里**handleAndReturnData************************************************************");
         System.out.println("执行到这里说明出现了bug ************************************************************");
+        System.out.println("bug详情：");
+        System.out.println(ex.getMessage());   //这个是查看Exception详情的
         return new ResultDto(500, "Exception=" + ex.getClass());
     }
 

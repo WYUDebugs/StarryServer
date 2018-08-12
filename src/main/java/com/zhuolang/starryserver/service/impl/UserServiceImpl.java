@@ -49,6 +49,15 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 通过id查询User信息
+     * @param id
+     * @return 查找成功返回User，没有则null
+     */
+    public User findUserById(int id) {
+        return userDao.findUserById(id);
+    }
+
+    /**
      * 通过phone检验密码是否正确
      * @param phone
      * @param password

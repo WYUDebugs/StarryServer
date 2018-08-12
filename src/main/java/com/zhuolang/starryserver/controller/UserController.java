@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by wunaifu on 2018/7/28.
  */
@@ -50,6 +52,25 @@ public class UserController extends BaseExceptionHandleAction {
         ResultDto resultDto = userService.addUserByPhonePsw(phone, psw);
         return resultDto;
     }
+    /**
+     * 用户登陆接口
+     *
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/Login")
+    public ResultDto checkPassword(HttpServletRequest request) {
+
+        //request.getParameter("phone")就是APP端传过来的请求参数
+        String phone = request.getParameter("phone");
+        String psw = request.getParameter("password");
+
+        ResultDto resultDto = userService.checkPassword(phone,psw);
+
+        return resultDto;
+    }
+
 
     /**
      * 通过phone查找用户的信息
@@ -63,16 +84,9 @@ public class UserController extends BaseExceptionHandleAction {
     @RequestMapping(value = "/findUserByPhone")
     //@RequestMapping(value = "/findUserByPhone",method = RequestMethod.POST)//可以指定请求方式,如果不指定，默认post，get都可以
     public ResultDto findUserByPhone(HttpServletRequest request, HttpServletResponse response) {
-        String phone = "";
-        User user;
-        try {
-            //request.getParameter("phone")就是APP端传过来的请求参数
-            phone = request.getParameter("phone");
-            user = userService.findUserByPhone(phone);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResultDto(500, "Error Exception===" + e.getClass());
-        }
+        String phone = request.getParameter("phone");
+        User user = userService.findUserByPhone(phone);
+
         if (user == null) {
             //ResultDto返回数据的封装类，参数使用规则可自定义
             //例：
@@ -81,27 +95,35 @@ public class UserController extends BaseExceptionHandleAction {
             // data：需要的数据
             return new ResultDto(200, "nodata", null);
         } else {
-            return new ResultDto(200, "success", user.getPassword());
+            return new ResultDto(200, "success", user);
         }
     }
+
     /**
-     * 用户登陆接口
+     * 通过id查找用户的信息
      *
      * @param request
+     * @param response
      * @return
+     * @throws IOException 这些参数就是APP那边请求的参数  HttpServletResponse是用来返回数据的，不是APP那边请求的参数，这里暂时用不到
      */
     @ResponseBody//将返回的数据处理为json
-    @RequestMapping(value = "/Login")
-    public ResultDto checkPassword(HttpServletRequest request)
-            throws IOException {
+    @RequestMapping(value = "/findUserById")
+    //@RequestMapping(value = "/findUserById",method = RequestMethod.POST)//可以指定请求方式,如果不指定，默认post，get都可以
+    public ResultDto findUserById(HttpServletRequest request, HttpServletResponse response){
+        int id = parseInt(request.getParameter("id"));   //用parseInt()方法将字符串转换成int数据(！！小心！！)
+        User user = userService.findUserById(id);
 
-        //request.getParameter("phone")就是APP端传过来的请求参数
-        String phone = request.getParameter("phone");
-        String psw = request.getParameter("password");
-
-        ResultDto resultDto = userService.checkPassword(phone,psw);
-
-        return resultDto;
+        if (user == null) {
+            //ResultDto返回数据的封装类，参数使用规则可自定义
+            //例：
+            // stauts:状态返回码，200：URL访问请求成功，并成功返回数据；500：URL访问请求成功但内部程序出错
+            // msg：信息提示
+            // data：需要的数据
+            return new ResultDto(200, "nodata", null);
+        } else {
+            return new ResultDto(200, "success", user);
+        }
     }
 
 }
