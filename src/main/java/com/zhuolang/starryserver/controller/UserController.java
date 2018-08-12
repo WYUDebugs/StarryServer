@@ -1,6 +1,7 @@
 package com.zhuolang.starryserver.controller;
 
 import com.zhuolang.starryserver.dto.ResultDto;
+import com.zhuolang.starryserver.entity.User;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
 import com.zhuolang.starryserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by wunaifu on 2018/7/28.
@@ -46,6 +48,59 @@ public class UserController extends BaseExceptionHandleAction {
 
         //获取到phone和psw后直接传数据给service层处理，controller一般只处理简单的数据传输操作
         ResultDto resultDto = userService.addUserByPhonePsw(phone, psw);
+        return resultDto;
+    }
+
+    /**
+     * 通过phone查找用户的信息
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException 这些参数就是APP那边请求的参数  HttpServletResponse是用来返回数据的，不是APP那边请求的参数，这里暂时用不到
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/findUserByPhone")
+    //@RequestMapping(value = "/findUserByPhone",method = RequestMethod.POST)//可以指定请求方式,如果不指定，默认post，get都可以
+    public ResultDto findUserByPhone(HttpServletRequest request, HttpServletResponse response) {
+        String phone = "";
+        User user;
+        try {
+            //request.getParameter("phone")就是APP端传过来的请求参数
+            phone = request.getParameter("phone");
+            user = userService.findUserByPhone(phone);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResultDto(500, "Error Exception===" + e.getClass());
+        }
+        if (user == null) {
+            //ResultDto返回数据的封装类，参数使用规则可自定义
+            //例：
+            // stauts:状态返回码，200：URL访问请求成功，并成功返回数据；500：URL访问请求成功但内部程序出错
+            // msg：信息提示
+            // data：需要的数据
+            return new ResultDto(200, "nodata", null);
+        } else {
+            return new ResultDto(200, "success", user.getPassword());
+        }
+    }
+    /**
+     * 用户登陆接口
+     *
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/Login")
+    public ResultDto checkPassword(HttpServletRequest request)
+            throws IOException {
+
+        //request.getParameter("phone")就是APP端传过来的请求参数
+        String phone = request.getParameter("phone");
+        String psw = request.getParameter("password");
+
+        ResultDto resultDto = userService.checkPassword(phone,psw);
+
         return resultDto;
     }
 

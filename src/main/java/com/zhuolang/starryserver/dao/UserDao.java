@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.dao;
 
 import com.zhuolang.starryserver.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Date;
 import java.util.List;
@@ -26,4 +27,12 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * @return 查找成功返回User，没有则null
      */
     User findUserByPhone(String phone);
+
+    /**
+     * 通过phone检验密码是否正确
+     * @param phone
+     * @param password
+     * @return 正确返回user，失败返回null
+     */
+    User checkPassword(@Param("phone") String phone,@Param("password") String password);
 }

@@ -39,5 +39,29 @@ public class UserServiceImpl implements UserService {
         return new ResultDto(200, "register_failure", null);
     }
 
+    /**
+     * 通过phone查询User信息
+     * @param phone
+     * @return 查找成功返回User，没有则null
+     */
+    public User findUserByPhone(String phone) {
+        return userDao.findUserByPhone(phone);
+    }
+
+    /**
+     * 通过phone检验密码是否正确
+     * @param phone
+     * @param password
+     * @return 正确返回1，错误返回0
+     */
+    public ResultDto checkPassword(String phone, String password) {
+        User user = userDao.checkPassword(phone,password);
+        if (user == null) {
+            return new ResultDto(200, "login_failure", null);
+        }else {
+            return new ResultDto(200, "login_success", user);
+        }
+    }
+
 
 }

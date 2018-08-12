@@ -24,4 +24,11 @@
         WHERE phone=#{phone}
     </select>
 
+    <!--检测密码是否正确-->
+    <select id="checkPassword" resultType="com.zhuolang.starryserver.entity.User">
+        SELECT *
+        FROM user_tab
+        WHERE phone=#{phone} AND password=#{password}
+    </select>
+
 </mapper>
