@@ -15,7 +15,7 @@ public class User {
     private String address;//地址
     private String typelabel;//用户性格标签
     private String PhoneId;//手机设备（推送用）
-    private String register_time;//注册时间
+    private String registerTime;//注册时间
     private String signature;//个性签名
 
     public int getId() {
@@ -114,12 +114,11 @@ public class User {
         this.PhoneId = PhoneId;
     }
 
-    public String getRegister_time() {
-        return register_time;
+    public String getRegisterTime() {
+        return registerTime;
     }
 
-    public void setRegister_time(String register_time) {
-        this.register_time = register_time;
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
-
 }

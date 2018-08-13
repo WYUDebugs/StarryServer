@@ -46,7 +46,10 @@ public class UserController extends BaseExceptionHandleAction {
 
         //request.getParameter("phone")就是APP端传过来的请求参数
         String phone = request.getParameter("phone");
-        String psw = request.getParameter("password");
+        String psw = "123456";//如果不传密码参数过来，则密码默认为123456
+        if (request.getParameter("password") != null) {
+            psw = request.getParameter("password");
+        }
 
         //获取到phone和psw后直接传数据给service层处理，controller一般只处理简单的数据传输操作
         ResultDto resultDto = userService.addUserByPhonePsw(phone, psw);
