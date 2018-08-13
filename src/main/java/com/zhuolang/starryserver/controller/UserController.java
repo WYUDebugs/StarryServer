@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
@@ -129,4 +130,27 @@ public class UserController extends BaseExceptionHandleAction {
         }
     }
 
+    /**
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException 这些参数就是APP那边请求的参数  HttpServletResponse是用来返回数据的，不是APP那边请求的参数，这里暂时用不到
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/findAllUser")
+    public ResultDto findAllUser(HttpServletRequest request, HttpServletResponse response) {
+
+        List<User> userList = userService.findAllUserDESC();
+
+        if (userList != null && userList.size() > 0) {
+            //ResultDto返回数据的封装类，参数使用规则可自定义
+            //例：
+            // stauts:状态返回码，200：URL访问请求成功，并成功返回数据；500：URL访问请求成功但内部程序出错
+            // msg：信息提示
+            // data：需要的数据
+            return new ResultDto(200, "success", userList);
+        } else {
+            return new ResultDto(200, "nodata", null);
+        }
+    }
 }

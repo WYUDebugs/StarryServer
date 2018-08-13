@@ -42,4 +42,10 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * @return 正确返回user，失败返回null
      */
     User checkPassword(@Param("phone") String phone,@Param("password") String password);
+
+    /**
+     * 查找所有User，并按年龄降序排序好
+     * @return
+     */
+    List<User> findAllUserDESC();
 }

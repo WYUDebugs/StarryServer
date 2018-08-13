@@ -4,6 +4,8 @@ import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserService {
 
     ResultDto addUserByPhonePsw(String phone, String password);
@@ -33,4 +35,10 @@ public interface UserService {
      */
     ResultDto checkPassword(String phone,String password);
 
+    /**
+     * 查找所有User，并按年龄降序排序好
+     *
+     * @return
+     */
+    List<User> findAllUserDESC();
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service  //添加UserService的test时，选中类名UserServiceImpl，右键go to->test-创建->选择Junit4,选择添加的测试方法，finish
 public class UserServiceImpl implements UserService {
@@ -72,5 +73,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
+    /**
+     * 查找所有User，并按年龄降序排序好
+     * @return
+     */
+    public List<User> findAllUserDESC() {
+        return userDao.findAllUserDESC();
+    }
 }
