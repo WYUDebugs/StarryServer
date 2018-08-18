@@ -44,4 +44,47 @@
         FROM user_tab
         ORDER BY age DESC
     </select>
+
+    <!--通过id和password修改UserPhone-->
+    <update id="changePhoneById" >
+        UPDATE user_tab
+        SET phone = #{phone}
+        WHERE id=#{id} AND password=#{password};
+    </update>
+
+    <!--通过id修改headimage-->
+    <update id="changeHeadimageById">
+        UPDATE user_tab
+        SET headimage = #{headimage}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过id修改User的基本信息-->
+    <update id="changeUserById">
+        update user_tab
+        <set>
+            <if test="user.name != null">
+                name =#{user.name},
+            </if>
+            <if test="user.gender != null">
+                gender =#{user.gender},
+            </if>
+            <if test="user.age != null">
+                age =#{user.age},
+            </if>
+            <if test="user.birthday != null">
+                birthday =#{user.birthday},
+            </if>
+            <if test="user.address != null">
+                address =#{user.address},
+            </if>
+            <if test="user.typelabel != null">
+                typelabel =#{user.typelabel},
+            </if>
+            <if test="user.signature != null">
+                signature =#{user.signature},
+            </if>
+        </set>
+        where id =#{user.id}
+    </update>
 </mapper>

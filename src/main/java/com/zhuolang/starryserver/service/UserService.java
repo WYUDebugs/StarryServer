@@ -41,4 +41,31 @@ public interface UserService {
      * @return
      */
     List<User> findAllUserDESC();
+
+    /**
+     * 通过id和password更改phone
+     *
+     * @param id
+     * @param password
+     * @return 更改成功返回1，没有则0
+     */
+    int changePhoneById(int id , String password , String phone);
+
+    /**
+     * 通过id修改headimage
+     *
+     * @param id
+     * @param headiamge
+     * @return 更改成功返回1，没有则0
+     */
+    int changeHeadimageById(int id , String headiamge);
+
+    /**
+     * 通过id修改用户基本信息
+     *
+     *
+     * @param user
+     * @return 更改成功返回1，没有则0
+     */
+    int changeUserById(User user);
 }

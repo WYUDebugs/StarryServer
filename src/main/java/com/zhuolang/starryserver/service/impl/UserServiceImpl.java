@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
      * 通过phone检验密码是否正确
      * @param phone
      * @param password
-     * @return 正确返回1，错误返回0
+     * @return
      */
     public ResultDto checkPassword(String phone, String password) {
         User user = userDao.checkPassword(phone,password);
@@ -79,5 +79,38 @@ public class UserServiceImpl implements UserService {
      */
     public List<User> findAllUserDESC() {
         return userDao.findAllUserDESC();
+    }
+
+    /**
+     * 通过id和password更改phone
+     *
+     * @param id
+     * @param password
+     * @return 更改成功返回1，没有则0
+     */
+    public int changePhoneById(int id , String password,String phone){
+        return userDao.changePhoneById(id,password,phone);
+    }
+
+    /**
+     * 通过id修改headimage
+     *
+     * @param id
+     * @param headimage
+     * @return 更改成功返回1，没有则0
+     */
+    public int changeHeadimageById(int id , String headimage){
+        return userDao.changeHeadimageById(id ,headimage);
+    }
+
+    /**
+     * 通过id修改用户基本信息
+     *
+     *
+     * @param user
+     * @return 更改成功返回1，没有则0
+     */
+    public int changeUserById(User user){
+        return userDao.changeUserById(user);
     }
 }

@@ -48,4 +48,31 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * @return
      */
     List<User> findAllUserDESC();
+
+    /**
+     * 通过id和password更改phone
+     *
+     * @param id
+     * @param password
+     * @return 更改成功返回1，没有则0
+     */
+    int changePhoneById(@Param("id") int id ,@Param("password") String password, @Param("phone") String phone);
+
+    /**
+     * 通过id修改headimage
+     *
+     * @param id
+     * @param headiamge
+     * @return 更改成功返回1，没有则0
+     */
+    int changeHeadimageById(@Param("id") int id , @Param("headimage") String headiamge);
+
+    /**
+     * 通过id修改用户基本信息
+     *
+     *
+     * @param user
+     * @return 更改成功返回1，没有则0
+     */
+    int changeUserById(@Param("user") User user);
 }

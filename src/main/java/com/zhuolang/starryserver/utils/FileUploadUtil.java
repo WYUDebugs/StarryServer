@@ -13,6 +13,7 @@ public class FileUploadUtil {
 
     /**
      * 上传单个文件例子，返回上传后的文件名，上传失败则返回null
+     * 上传头像！
      * @param file
      * @param request
      * @return

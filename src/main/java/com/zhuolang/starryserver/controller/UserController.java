@@ -4,10 +4,13 @@ import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.User;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
 import com.zhuolang.starryserver.service.UserService;
+import com.zhuolang.starryserver.utils.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,6 +134,9 @@ public class UserController extends BaseExceptionHandleAction {
     }
 
     /**
+     *
+     * 查找显示所有用户数据
+     *
      * @param request
      * @param response
      * @return
@@ -153,4 +159,83 @@ public class UserController extends BaseExceptionHandleAction {
             return new ResultDto(200, "nodata", null);
         }
     }
+
+    /**
+     * 通过id和password更改phone
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException 这些参数就是APP那边请求的参数  HttpServletResponse是用来返回数据的，不是APP那边请求的参数，这里暂时用不到
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/changePhoneById")
+    public ResultDto changePhoneById(HttpServletRequest request, HttpServletResponse response){
+        //request.getParameter("xxx")就是APP端传过来的请求参数
+        int id = parseInt(request.getParameter("id"));   //用parseInt()方法将字符串转换成int数据(！！小心！！)
+        String password = request.getParameter("password");
+        String phone = request.getParameter("phone");
+        if(userService.changePhoneById(id , password , phone) == 1){
+            return new ResultDto(200,"success","newPhone:"+phone);
+        }else {
+            return new ResultDto(200,"fail","0");
+        }
+    }
+
+    /**
+     * 通过id修改headimage
+     *
+     * @param file
+     * @param request
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateHeadImage")
+    public ResultDto uploadFile(@RequestParam(value = "headimage") MultipartFile file, HttpServletRequest request) {
+        //单个文件上传，返回文件上传后的名字
+        String resultStr = FileUploadUtil.uploadFile(file,request);
+        //匹配User的id
+        int id = parseInt(request.getParameter("id"));   //用parseInt()方法将字符串转换成int数据(！！小心！！)
+        //判断头像文件是否上传成功
+        if (resultStr == null) {
+            return ResultDto.error();
+        } else {
+            int num = userService.changeHeadimageById(id,resultStr);  //传入参数，通过id更改headimage
+            //判断更改是否成功
+            if(num == 1) {
+                return new ResultDto(200, "success", "headimage:" + resultStr);
+            }
+            else {
+                return new ResultDto(200,"fail","0");
+            }
+        }
+    }
+
+    /**
+     * 通过id修改用户基本信息
+     *
+     *
+     * @param request
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/changeUserById")
+    public ResultDto changeUserById(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));  //用parseInt()方法将字符串转换成int数据(！！小心！！)
+        User user = userService.findUserById(id);
+
+        //传入各项参数
+        user.setName(request.getParameter("name"));
+        user.setGender(Integer.parseInt(request.getParameter("gender")));
+        user.setAge(Integer.parseInt(request.getParameter("age")));
+        user.setBirthday(request.getParameter("birthday"));
+        user.setAddress(request.getParameter("address"));
+        user.setTypelabel(request.getParameter("typelabel"));
+        user.setSignature(request.getParameter("signature"));
+        //修改并判断修改是否成功
+        if(userService.changeUserById(user) == 1){
+            return new ResultDto(200,"success",user);
+        }else {
+            return new ResultDto(200,"fail","0");
+        }
+    }
+
 }

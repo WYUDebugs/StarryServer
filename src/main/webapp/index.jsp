@@ -16,7 +16,7 @@
 <h2>测试单文件上传</h2>
 <form action="/starry/user/uploadFile" method="post" enctype="multipart/form-data" >
 
-    <input type="file" name="file"><br/>
+    <input type="file" name="headimage"><br/>
     <input type="submit"value="提交"/>
 </form>
 </body>
