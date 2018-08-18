@@ -34,6 +34,7 @@ public class BaseExceptionHandleAction {
         System.out.println("执行到这里说明出现了bug ************************************************************");
         System.out.println("bug详情：");
         System.out.println(ex.getMessage());   //这个是查看Exception详情的
+        ex.printStackTrace();
         return new ResultDto(500, "Exception=" + ex.getClass());
     }
 
