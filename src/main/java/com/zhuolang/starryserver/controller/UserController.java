@@ -176,9 +176,9 @@ public class UserController extends BaseExceptionHandleAction {
         String password = request.getParameter("password");
         String phone = request.getParameter("phone");
         if(userService.changePhoneById(id , password , phone) == 1){
-            return new ResultDto(200,"success","newPhone:"+phone);
+            return new ResultDto(200,"success",null);
         }else {
-            return new ResultDto(200,"fail","0");
+            return new ResultDto(200,"fail",null);
         }
     }
 
@@ -202,10 +202,10 @@ public class UserController extends BaseExceptionHandleAction {
             int num = userService.changeHeadimageById(id,resultStr);  //传入参数，通过id更改headimage
             //判断更改是否成功
             if(num == 1) {
-                return new ResultDto(200, "success", "headimage:" + resultStr);
+                return new ResultDto(200, "success", null);
             }
             else {
-                return new ResultDto(200,"fail","0");
+                return new ResultDto(200,"fail",null);
             }
         }
     }
@@ -234,7 +234,7 @@ public class UserController extends BaseExceptionHandleAction {
         if(userService.changeUserById(user) == 1){
             return new ResultDto(200,"success",user);
         }else {
-            return new ResultDto(200,"fail","0");
+            return new ResultDto(200,"fail",null);
         }
     }
 
