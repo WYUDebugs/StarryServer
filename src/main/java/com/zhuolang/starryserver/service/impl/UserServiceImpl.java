@@ -113,4 +113,15 @@ public class UserServiceImpl implements UserService {
     public int changeUserById(User user){
         return userDao.changeUserById(user);
     }
+
+    /**
+     * 通过phone删除uesr
+     *
+     *
+     * @param phone
+     * @return 删除成功返回1，没有则0
+     */
+    public int deleteUserByPhone(String phone){
+        return userDao.deleteUserByPhone(phone);
+    }
 }

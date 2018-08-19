@@ -87,4 +87,9 @@
         </set>
         where id =#{user.id}
     </update>
+
+    <delete id="deleteUserByPhone">
+        DELETE FROM user_tab
+        WHERE phone=#{phone}
+    </delete>
 </mapper>

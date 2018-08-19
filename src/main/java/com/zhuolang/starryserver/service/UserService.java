@@ -68,4 +68,13 @@ public interface UserService {
      * @return 更改成功返回1，没有则0
      */
     int changeUserById(User user);
+
+    /**
+     * 通过phone删除uesr
+     *
+     *
+     * @param phone
+     * @return 删除成功返回1，没有则0
+     */
+    int deleteUserByPhone(String phone);
 }

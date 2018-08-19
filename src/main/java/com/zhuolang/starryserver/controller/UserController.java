@@ -238,4 +238,21 @@ public class UserController extends BaseExceptionHandleAction {
         }
     }
 
+    /**
+     * 通过phone来删除user
+     *
+     *
+     * @param request
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/deleteUserByPhone")
+    public ResultDto deleteUserByPhone(HttpServletRequest request){
+        String phone = request.getParameter("phone");
+        if (userService.deleteUserByPhone(phone) == 1){
+            return new ResultDto(200,"success",null);
+        }else {
+            return new ResultDto(200,"fail",null);
+        }
+    }
+
 }

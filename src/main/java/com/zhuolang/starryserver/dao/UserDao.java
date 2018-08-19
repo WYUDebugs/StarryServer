@@ -75,4 +75,13 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * @return 更改成功返回1，没有则0
      */
     int changeUserById(@Param("user") User user);
+
+    /**
+     * 通过phone删除uesr
+     *
+     *
+     * @param phone
+     * @return 删除成功返回1，没有则0
+     */
+    int deleteUserByPhone(@Param("phone") String phone);
 }
