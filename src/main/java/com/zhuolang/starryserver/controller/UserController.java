@@ -54,9 +54,10 @@ public class UserController extends BaseExceptionHandleAction {
         if (request.getParameter("password") != null) {
             psw = request.getParameter("password");
         }
+        String name = request.getParameter("name");
 
         //获取到phone和psw后直接传数据给service层处理，controller一般只处理简单的数据传输操作
-        ResultDto resultDto = userService.addUserByPhonePsw(phone, psw);
+        ResultDto resultDto = userService.addUserByPhonePsw(phone, psw ,name);
         return resultDto;
     }
     /**

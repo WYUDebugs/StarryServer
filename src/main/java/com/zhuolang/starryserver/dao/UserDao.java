@@ -14,12 +14,14 @@ import java.util.List;
 public interface UserDao {//添加UserDao的test时，选中类名UserDao，右键go to->test-创建->选择Junit4,选择添加的测试方法，finish
 
     /**注册会用到
-     * 通过 phone和password 来添加 User
+     * 通过 name、phone和password 来添加 User
+     *
      * @param phone
      * @param password
+     * @param name
      * @return 插入的行数
      */
-    int addUserByPhonePsw(@Param("phone") String phone, @Param("password") String password, @Param("registerTime") Date registerTime);
+    int addUserByPhonePsw(@Param("phone") String phone, @Param("password") String password, @Param("name") String name, @Param("registerTime") Date registerTime);
 
     /**
      * 通过phone查询User信息

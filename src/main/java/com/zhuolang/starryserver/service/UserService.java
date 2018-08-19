@@ -8,7 +8,14 @@ import java.util.List;
 
 public interface UserService {
 
-    ResultDto addUserByPhonePsw(String phone, String password);
+    /**注册会用到
+     * 通过 name、phone和password 来添加 User
+     * @param phone
+     * @param password
+     * @param name
+     * @return
+     */
+    ResultDto addUserByPhonePsw(String phone, String password ,String name);
 
     /**
      * 通过phone查询User信息

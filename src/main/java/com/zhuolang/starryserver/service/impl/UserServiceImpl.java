@@ -22,19 +22,20 @@ public class UserServiceImpl implements UserService {
 
 
     /**注册会用到
-     * 通过 phone和password 来添加 User
+     * 通过 name、phone和password 来添加 User
      * @param phone
      * @param password
+     * @param name
      * @return
      */
-    public ResultDto addUserByPhonePsw(String phone, String password) {
+    public ResultDto addUserByPhonePsw(String phone, String password, String name) {
         //先判断手机号是否已被注册
         User user = userDao.findUserByPhone(phone);
         if (user != null) {
             return  new ResultDto(200, "phone_exist", null);
         }
         //手机号未被注册，进行注册，且记录注册时间
-        if (userDao.addUserByPhonePsw(phone, password,new Date()) == 1) {
+        if (userDao.addUserByPhonePsw(phone, password, name ,new Date()) == 1) {
             return new ResultDto(200, "register_success", null);
         }
         return new ResultDto(200, "register_failure", null);
