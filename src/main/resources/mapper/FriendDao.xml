@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace为对应的dao类路径 -->
+<mapper namespace="com.zhuolang.starryserver.dao.FriendDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--id对应dao的方法名，如果是多参数parameterType不用给，但需要在dao方法的参数前加上@Param("killTime")
+            例如：int reduceNumber(@Param("seckillId") long seckillId, @Param("killTime") Date killTime);-->
+    <!--注意：增删改查对应相应的标签，更新操作对应update标签，插入对应insert，查找对应select，删除对应delete-->
+
+    <!--通过friendId来添加好友-->
+    <insert id="addFriendById">
+        <!--当出现主键冲突时(即重复时)，会报错;不想让程序报错，加入ignore-->
+        INSERT ignore INTO friend_tab (user_id,friend_id,friend_name,add_time)
+        VALUES (#{user_id},#{friend_id},#{friend_name},#{add_time});
+    </insert>
+
+    <select id="findFriendById" resultType="com.zhuolang.starryserver.entity.Friend">
+        select *
+        from friend_tab
+        where friend_id =#{friend_id} and user_id =#{user_id}
+    </select>
+
+    <!--通过friendId来修改好友昵称-->
+    <update id="changeFriendnameById">
+        update friend_tab
+        set friend_name =#{friend_name}
+        where friend_id =#{friend_id} and user_id =#{user_id}
+    </update>
+
+    <!--通过friendId来删除好友-->
+    <delete id="deleteFriendById">
+        delete from friend_tab
+        where friend_id =#{friend_id} and user_id =#{user_id}
+    </delete>
+
+    <!--通过user_id列表展示好友-->
+    <select id="findAllFriendASC" resultType="com.zhuolang.starryserver.entity.Friend">
+        SELECT *
+        FROM friend_tab
+        where user_id =#{user_id}
+        ORDER BY id ASC
+    </select>
+
+</mapper>
