@@ -12,10 +12,10 @@ public interface FriendService {
      *
      * @param user_id
      * @param friend_id
-     * @param friend_name
+     * @param
      * @return
      */
-    ResultDto addFriendById(int user_id, int friend_id, String friend_name);
+    ResultDto addFriendById(int user_id, int friend_id);
 
     /**
      * 通过friend_id查找friend(好友)

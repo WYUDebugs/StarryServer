@@ -10,14 +10,17 @@ import java.util.List;
 public interface FriendDao {
 
     /**
-     * 通过friend_id添加好友
+     * 通过friend_id添加好友（双向）
      *
      * @param user_id
      * @param friend_id
      * @param friend_name
      * @return 成功返回1，否则返回0
      */
-    int addFriendById(@Param("user_id")int user_id ,@Param("friend_id") int friend_id
+    int toAddFriendById(@Param("user_id")int user_id ,@Param("friend_id") int friend_id
+            ,@Param("friend_name")String friend_name ,@Param("add_time") Date add_time);
+
+    int fromAddFriendById(@Param("user_id")int friend_id ,@Param("friend_id") int user_id
             ,@Param("friend_name")String friend_name ,@Param("add_time") Date add_time);
 
     /**
