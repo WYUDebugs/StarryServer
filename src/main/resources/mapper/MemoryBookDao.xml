@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybaties.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace为对应的dao类接口-->
+<mapper namespace="com.zhuolang.starryserver.dao.MemoryBookDao">
+    <!--目的:为dao接口方法提供sql语句配置
+    即针对dao接口中的方法编写我们的sql语句-->
+
+    <!--id对应dao的方法名，如果是多参数parameterType不用给，但需要在dao方法的参数前加上@Param("killTime")
+            例如：int reduceNumber(@Param("seckillId") long seckillId, @Param("killTime") Date killTime);-->
+    <!--注意：增删改查对应相应的标签，更新操作对应update标签，插入对应insert，查找对应select，删除对应delete-->
+
+    <!--通过 title 添加 memoryBook-->
+    <insert id="addMemoryBook">
+        <!--当出现主键冲突时(即重复时)，会报错;不想让程序报错，加入ignore-->
+        INSERT ignore INTO memory_book_tab (owner,title,creat_time)
+        VALUES (#{owner},#{title},#{creatTime})
+    </insert>
+
+    <!--通过 id 删除 memoryBook-->
+    <delete id="deleteMemoryBook">
+        DELETE FROM memory_book_tab
+        WHERE id=#{id}
+    </delete>
+
+    <!--通过 id 修改 memoryBook 的 owner-->
+    <update id="changeMemoryBookOwner">
+        UPDATE memory_book_tab
+        SET owner=#{owner}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过 id 更改 memoryBook 的 title-->
+    <update id="changeMemoryBookTitle">
+        UPDATE memory_book_tab
+        SET title=#{title}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过 id 更改 memoryBook 的 cover-->
+    <update id="changeMemoryBookCover">
+        UPDATE memory_book_tab
+        SET cover=#{fileName}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过 title 查找 memoryBook-->
+    <select id="findMemoryBookByTitle" resultType="com.zhuolang.starryserver.entity.MemoryBook" parameterType="String">
+        SELECT *
+        FROM memory_book_tab
+        WHERE title=#{title}
+    </select>
+
+    <!--查找所有 memoryBook，并按创建时间降序排序-->
+    <select id="findAllMemoryBookDESC" resultType="com.zhuolang.starryserver.entity.MemoryBook">
+        SELECT *
+        FROM memory_book_tab
+        ORDER BY creat_time DESC
+    </select>
+
+    <delete id="deleteAllMemoryBook">
+        DELETE FROM memory_book_tab
+    </delete>
+
+
+</mapper>
