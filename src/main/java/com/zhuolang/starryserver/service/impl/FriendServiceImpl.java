@@ -1,8 +1,10 @@
 package com.zhuolang.starryserver.service.impl;
 
 import com.zhuolang.starryserver.dao.FriendDao;
+import com.zhuolang.starryserver.dao.UserDao;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Friend;
+import com.zhuolang.starryserver.entity.User;
 import com.zhuolang.starryserver.service.FriendService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ public class FriendServiceImpl implements FriendService {
     //    @Resource
     @Autowired
     private FriendDao friendDao;
+    private UserDao userDao;
 
     //也可以注入别的dao,例如对应post_tab表的PostDao，这样就可以根据需求整合多表的增删改查
     /**
@@ -26,15 +29,23 @@ public class FriendServiceImpl implements FriendService {
      *
      * @param user_id
      * @param friend_id
-     * @param friend_name
+     * @param
      * @return
      */
     @Override
-    public ResultDto addFriendById(int user_id, int friend_id, String friend_name) {
-        if (friendDao.addFriendById(user_id, friend_id, friend_name ,new Date()) == 1) {
+    public ResultDto addFriendById(int user_id, int friend_id) {
+        // 通过id获取用户昵称
+        User toFriendUser = userDao.findUserById(friend_id);
+        User fromFriendUser = userDao.findUserById(user_id);
+        String toFriendName = toFriendUser.getName();
+        String fromFriendName = fromFriendUser.getName();
+
+        if (friendDao.toAddFriendById(user_id, friend_id, toFriendName ,new Date()) == 1
+        && friendDao.fromAddFriendById(friend_id, user_id,fromFriendName,new Date()) == 1) {
             return new ResultDto(200, "add_success", null);
+        }else {
+            return new ResultDto(200, "add_failure", null);
         }
-        return new ResultDto(200, "add_failure", null);
     }
 
     /**

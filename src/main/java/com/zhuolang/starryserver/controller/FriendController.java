@@ -34,9 +34,8 @@ public class FriendController extends BaseExceptionHandleAction {
     public ResultDto addFriend(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
         int friendId = Integer.parseInt(request.getParameter("friendId"));  //传入参数，并将字符参数转为整型
-        String friendName = request.getParameter("friendName");
 
-        ResultDto resultDto = friendService.addFriendById(userId,friendId,friendName);
+        ResultDto resultDto = friendService.addFriendById(userId,friendId);
         return resultDto;
     }
 
