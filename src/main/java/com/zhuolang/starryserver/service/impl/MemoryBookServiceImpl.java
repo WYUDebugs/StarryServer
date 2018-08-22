@@ -97,9 +97,18 @@ public class MemoryBookServiceImpl implements MemoryBookService {
 
     /**
      * 删除所有 memoryBook
-     * @return 删除成功返回 1，删除失败返回 0
+     * @return 删除成功返回影响memory_book_tab的行数，删除失败返回 0
      */
     public int deleteAllMemoryBook(){
         return memoryBookDao.deleteAllMemoryBook();
+    }
+
+    /**
+     * 通过 id 查找 memoryBook
+     * @param id
+     * @return
+     */
+    public MemoryBook findMemoryBookById(int id) {
+        return memoryBookDao.findMemoryBookById(id);
     }
 }

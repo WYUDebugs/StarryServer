@@ -61,16 +61,15 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
      * 通过 id 删除 memoryBook
      *
      * @param request
-     * @param response
      * @return
      */
     @ResponseBody//将返回数据处理为json
     @RequestMapping(value = "/deleteMemoryBook")
-    public ResultDto deleteMemoryBook(HttpServletRequest request, HttpServletResponse response) {
+    public ResultDto deleteMemoryBook(HttpServletRequest request) {
         int id = parseInt(request.getParameter("id"));
 
         //找不到该memoryBook
-        if ((userService.findUserById(id)) == null) {
+        if ((memoryBookService.findMemoryBookById(id)) == null) {
             return new ResultDto(200, "memory_book_is_not_exist");
         }
 
@@ -78,6 +77,29 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
             return new ResultDto(200, "success", null);
         } else {
             return new ResultDto(200, "fail", null);
+        }
+    }
+
+    /**
+     * 删除所有 memoryBook
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/deleteAllMemoryBook")
+    public ResultDto deleteAllMemoryBook(HttpServletRequest request, HttpServletResponse response) {
+        List<MemoryBook> memoryBookList = memoryBookService.findAllMemoryBookDESC();
+
+        if (memoryBookList != null && memoryBookList.size() > 0) {//如果存在memoryBook
+            //如果删除的行数等于表中数据条数
+            if (memoryBookService.deleteAllMemoryBook() == memoryBookList.size()) {
+                return new ResultDto(200, "success", null);
+            } else {
+                return new ResultDto(200, "fail", null);
+            }
+        } else {
+            return new ResultDto(200, "memory_book_list_is_empty", null);
         }
     }
 
@@ -187,24 +209,21 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
     }
 
     /**
-     * 删除所有 memoryBook
+     * 通过 id 查找 memoryBook
      * @param request
      * @param response
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/deleteAllMemoryBook")
-    public ResultDto deleteAllMemoryBook(HttpServletRequest request, HttpServletResponse response) {
-        List<MemoryBook> memoryBookList = memoryBookService.findAllMemoryBookDESC();
+    @RequestMapping(value = "/findMemoryBookById")
+    public ResultDto findMemoryBookById(HttpServletRequest request, HttpServletResponse response) {
+        int id = parseInt(request.getParameter("id"));
 
-        if (memoryBookList != null && memoryBookList.size() > 0) {//如果存在memoryBook
-            if ((memoryBookService.deleteAllMemoryBook()) == 1) {
-                return new ResultDto(200, "success", null);
-            } else {
-                return new ResultDto(200, "fail", null);
-            }
+        MemoryBook memoryBook = memoryBookService.findMemoryBookById(id);
+        if (memoryBook != null) {
+            return new ResultDto(200, "success", memoryBook);
         } else {
-            return new ResultDto(200, "memory_book_list_is_empty", null);
+            return new ResultDto(200, "memory_book_id_not_exist", null);
         }
     }
 

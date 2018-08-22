@@ -69,7 +69,14 @@ public interface MemoryBookDao {
 
     /**
      * 删除所有 memoryBook
-     * @return 删除成功返回 1，删除失败返回 0
+     * @return 删除成功返回影响memory_book_tab的行数，删除失败返回 0
      */
     int deleteAllMemoryBook();
+
+    /**
+     * 通过 id 查找 memoryBook
+     * @param id
+     * @return
+     */
+    MemoryBook findMemoryBookById(int id);
 }

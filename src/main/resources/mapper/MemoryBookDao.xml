@@ -24,6 +24,10 @@
         WHERE id=#{id}
     </delete>
 
+    <delete id="deleteAllMemoryBook">
+        DELETE FROM memory_book_tab
+    </delete>
+
     <!--通过 id 修改 memoryBook 的 owner-->
     <update id="changeMemoryBookOwner">
         UPDATE memory_book_tab
@@ -59,9 +63,11 @@
         ORDER BY creat_time DESC
     </select>
 
-    <delete id="deleteAllMemoryBook">
-        DELETE FROM memory_book_tab
-    </delete>
+    <select id="findMemoryBookById" resultType="com.zhuolang.starryserver.entity.MemoryBook">
+        SELECT *
+        FROM memory_book_tab
+        WHERE id=#{id}
+    </select>
 
 
 </mapper>
