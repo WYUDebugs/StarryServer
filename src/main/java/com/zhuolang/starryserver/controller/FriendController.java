@@ -35,8 +35,12 @@ public class FriendController extends BaseExceptionHandleAction {
         int userId = Integer.parseInt(request.getParameter("userId"));
         int friendId = Integer.parseInt(request.getParameter("friendId"));  //传入参数，并将字符参数转为整型
 
-        ResultDto resultDto = friendService.addFriendById(userId,friendId);
-        return resultDto;
+        if (friendService.findFriendById(userId,friendId) == null) {
+            ResultDto resultDto = friendService.addFriendById(userId, friendId);
+            return resultDto;
+        }else {
+            return new ResultDto(200,"exist",null);
+        }
     }
 
     /**

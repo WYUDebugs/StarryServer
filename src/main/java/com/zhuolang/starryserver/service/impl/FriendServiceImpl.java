@@ -20,6 +20,8 @@ public class FriendServiceImpl implements FriendService {
     //    @Resource
     @Autowired
     private FriendDao friendDao;
+
+    @Autowired
     private UserDao userDao;
 
     //也可以注入别的dao,例如对应post_tab表的PostDao，这样就可以根据需求整合多表的增删改查
@@ -40,8 +42,8 @@ public class FriendServiceImpl implements FriendService {
         String toFriendName = toFriendUser.getName();
         String fromFriendName = fromFriendUser.getName();
 
-        if (friendDao.toAddFriendById(user_id, friend_id, toFriendName ,new Date()) == 1
-        && friendDao.fromAddFriendById(friend_id, user_id,fromFriendName,new Date()) == 1) {
+        if (friendDao.addFriendById(user_id, friend_id, toFriendName ,new Date()) == 1
+        && friendDao.addFriendById(friend_id, user_id,fromFriendName,new Date()) == 1) {
             return new ResultDto(200, "add_success", null);
         }else {
             return new ResultDto(200, "add_failure", null);
@@ -81,7 +83,13 @@ public class FriendServiceImpl implements FriendService {
      */
     @Override
     public int deleteFriendById(int user_id, int friend_id) {
-        return friendDao.deleteFriendById(user_id,friend_id);
+       if (friendDao.deleteFriendById(user_id,friend_id) == 1
+       && friendDao.deleteFriendById(friend_id,user_id) == 1){
+           return 1;
+       }else {
+           return 0;
+       }
+
     }
 
     /**

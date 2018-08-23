@@ -12,12 +12,7 @@
     <!--注意：增删改查对应相应的标签，更新操作对应update标签，插入对应insert，查找对应select，删除对应delete-->
 
     <!--通过friendId来添加好友(双向)-->
-    <insert id="toAddFriendById">
-        <!--当出现主键冲突时(即重复时)，会报错;不想让程序报错，加入ignore-->
-        INSERT ignore INTO friend_tab (user_id,friend_id,friend_name,add_time)
-        VALUES (#{user_id},#{friend_id},#{friend_name},#{add_time});
-    </insert>
-    <insert id="fromAddFriendById">
+    <insert id="addFriendById">
         <!--当出现主键冲突时(即重复时)，会报错;不想让程序报错，加入ignore-->
         INSERT ignore INTO friend_tab (user_id,friend_id,friend_name,add_time)
         VALUES (#{user_id},#{friend_id},#{friend_name},#{add_time});

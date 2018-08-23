@@ -17,11 +17,10 @@ public interface FriendDao {
      * @param friend_name
      * @return 成功返回1，否则返回0
      */
-    int toAddFriendById(@Param("user_id")int user_id ,@Param("friend_id") int friend_id
+    int addFriendById(@Param("user_id")int friend_id ,@Param("friend_id") int user_id
             ,@Param("friend_name")String friend_name ,@Param("add_time") Date add_time);
 
-    int fromAddFriendById(@Param("user_id")int friend_id ,@Param("friend_id") int user_id
-            ,@Param("friend_name")String friend_name ,@Param("add_time") Date add_time);
+
 
     /**
      * 通过friend_id查找friend(好友)
@@ -50,6 +49,7 @@ public interface FriendDao {
      * @return 成功则返回1，否则返回0
      */
     int deleteFriendById(@Param("user_id")int user_id, @Param("friend_id")int friend_id);
+
 
     /**
      * 通过user_id列表展示好友
