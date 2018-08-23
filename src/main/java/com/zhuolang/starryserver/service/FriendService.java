@@ -13,9 +13,9 @@ public interface FriendService {
      * @param user_id
      * @param friend_id
      * @param
-     * @return
+     * @return 成功返回1，否则返回0
      */
-    ResultDto addFriendById(int user_id, int friend_id);
+    int addFriendById(int user_id, int friend_id);
 
     /**
      * 通过friend_id查找friend(好友)

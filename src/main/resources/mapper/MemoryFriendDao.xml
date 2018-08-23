@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhuolang.starryserver.dao.MemoryFriendDao">
+
+    <!--通过好友id添加纪念册好友-->
+    <insert id="addMemoryFriend">
+        <!--当出现主键冲突时(即重复时)，会报错;不想让程序报错，加入ignore-->
+        INSERT ignore INTO memory_friend_tab (friend_id,memory_book_id,add_time)
+        VALUES (#{friend_id},#{memory_book_id},#{add_time})
+    </insert>
+
+    <!--通过id删除纪念册好友-->
+    <delete id="deleteMemoryFriend">
+        delete from memory_friend_tab
+        where id =#{id}
+    </delete>
+
+    <!--通过memory_book_id列表展示该纪念册好友-->
+    <select id="findMemoryFriend" resultType="com.zhuolang.starryserver.entity.MemoryFriend">
+        select *
+        from memory_friend_tab
+        where memory_book_id =#{memory_book_id}
+        order by id ASC
+    </select>
+
+
+</mapper>

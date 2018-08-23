@@ -36,12 +36,29 @@ public class FriendController extends BaseExceptionHandleAction {
         int userId = Integer.parseInt(request.getParameter("userId"));
         int friendId = Integer.parseInt(request.getParameter("friendId"));  //传入参数，并将字符参数转为整型
 
-        if (friendService.findFriendById(userId,friendId) == null) {
-            ResultDto resultDto = friendService.addFriendById(userId, friendId);
-            return resultDto;
-        }else {
-            return new ResultDto(200,"exist",null);
+        int result = 0;
+        try{ //捕捉事务控制抛出的异常，防止程序异常崩溃
+            if (friendService.findFriendById(userId,friendId) == null) {
+                result = friendService.addFriendById(userId, friendId);
+            }else {
+                result = 2;
+            }
+        }catch (MyThrowException e){
+            System.out.println("异常捕捉：MyThrowException："+e.getMessage());
+            e.printStackTrace();
+        }catch (Exception e){
+            System.out.println("异常捕捉：Exception："+e.getMessage());
+            e.printStackTrace();
         }
+
+        if (result == 1){
+            return new ResultDto(200,"add_success",null);
+        }else if (result == 0){
+            return new ResultDto(200,"add_fail",null);
+        }else {
+            return new ResultDto(200,"friend exist",null);
+        }
+
     }
 
     /**

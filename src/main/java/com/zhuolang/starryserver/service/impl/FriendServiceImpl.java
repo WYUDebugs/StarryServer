@@ -36,19 +36,31 @@ public class FriendServiceImpl implements FriendService {
      * @param
      * @return
      */
+    @Transactional //事务注解标签
     @Override
-    public ResultDto addFriendById(int user_id, int friend_id) {
+    public int addFriendById(int user_id, int friend_id) {
         // 通过id获取用户昵称
         User toFriendUser = userDao.findUserById(friend_id);
         User fromFriendUser = userDao.findUserById(user_id);
         String toFriendName = toFriendUser.getName();
         String fromFriendName = fromFriendUser.getName();
 
-        if (friendDao.addFriendById(user_id, friend_id, toFriendName ,new Date()) == 1
-        && friendDao.addFriendById(friend_id, user_id,fromFriendName,new Date()) == 1) {
-            return new ResultDto(200, "add_success", null);
-        }else {
-            return new ResultDto(200, "add_failure", null);
+        try {
+            if (friendDao.addFriendById(user_id, friend_id, toFriendName ,new Date()) == 1) {
+                if (friendDao.addFriendById(friend_id, user_id,fromFriendName,new Date()) == 1){
+                    return 1;
+                }else {
+                    // 手动判断哪一步的增删改操作失败，则手动抛出异常，事务回滚，
+                    // 所有的增删改操作回退到未操作之前，保证数据一致性
+                    // 如果未有异常，则增删改操作正常执行
+                    throw new MyThrowException("add_failure");
+                }
+            }else {
+                throw new MyThrowException("add_failure");
+            }
+        }catch (MyThrowException e) {
+            //System.out.println("e========================" + e.getMessage());
+            throw e;
         }
     }
 
