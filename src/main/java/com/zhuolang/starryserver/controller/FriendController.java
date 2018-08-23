@@ -100,6 +100,7 @@ public class FriendController extends BaseExceptionHandleAction {
         int result = 0;
         try {//普通用户注册接口
             result = friendService.deleteFriendById(userId, friendId);
+        //捕捉事务控制抛出的异常，防止程序异常崩溃
         } catch (MyThrowException e) {
             System.out.println("异常捕捉：MyThrowException："+e.getMessage());
             e.printStackTrace();
