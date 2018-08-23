@@ -4,6 +4,7 @@ package com.zhuolang.starryserver.controller;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Friend;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,7 +96,18 @@ public class FriendController extends BaseExceptionHandleAction {
     public ResultDto deleteFriend(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
         int friendId = Integer.parseInt(request.getParameter("friendId"));  //传入参数，并将字符参数转为整型
-        if (friendService.deleteFriendById(userId,friendId) == 1){
+
+        int result = 0;
+        try {//普通用户注册接口
+            result = friendService.deleteFriendById(userId, friendId);
+        } catch (MyThrowException e) {
+            System.out.println("异常捕捉：MyThrowException："+e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("异常捕捉：Exception："+e.getMessage());
+            e.printStackTrace();
+        }
+        if (result == 1){
             return new ResultDto(200,"delete_success",null);
         }else {
             return new ResultDto(200,"delete_fail",null);

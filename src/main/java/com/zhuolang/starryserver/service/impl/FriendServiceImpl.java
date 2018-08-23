@@ -5,10 +5,12 @@ import com.zhuolang.starryserver.dao.UserDao;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Friend;
 import com.zhuolang.starryserver.entity.User;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.FriendService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -25,9 +27,9 @@ public class FriendServiceImpl implements FriendService {
     private UserDao userDao;
 
     //也可以注入别的dao,例如对应post_tab表的PostDao，这样就可以根据需求整合多表的增删改查
+
     /**
      * 通过id添加好友
-     *
      *
      * @param user_id
      * @param friend_id
@@ -59,7 +61,7 @@ public class FriendServiceImpl implements FriendService {
      */
     @Override
     public Friend findFriendById(int user_id, int friend_id) {
-        return friendDao.findFriendById(user_id,friend_id);
+        return friendDao.findFriendById(user_id, friend_id);
     }
 
     /**
@@ -80,15 +82,38 @@ public class FriendServiceImpl implements FriendService {
      * @param user_id
      * @param friend_id
      * @return 成功则返回1，否则返回0
+     *   使用注解控制事务方法的优点:
+     *   * 1.开发团队达成一致约定，明确标注事务方法的编程风格
+     *   * 2.保证事务方法的执行时间尽可能短，不要穿插其他网络操作RPC/HTTP请求或者剥离到事务方法外部
+     *   * 3.不是所有的方法都需要事务，如只有一条修改操作、只读操作不要事务控制
+     *   * 4.多条数据增删改操作时使用事务控制，保证数据一致性
      */
+    @Transactional //事务注解标签
     @Override
     public int deleteFriendById(int user_id, int friend_id) {
-       if (friendDao.deleteFriendById(user_id,friend_id) == 1
-       && friendDao.deleteFriendById(friend_id,user_id) == 1){
-           return 1;
-       }else {
-           return 0;
-       }
+//       if (friendDao.deleteFriendById(user_id,friend_id) == 1
+//       && friendDao.deleteFriendById(friend_id,user_id) == 1){
+//           return new ResultDto(200,"delete_success",null);
+//       }else {
+//           return new ResultDto(200,"delete_fail",null);
+//       }
+        try {
+            if (friendDao.deleteFriendById(user_id, friend_id) == 1) {
+                if (friendDao.deleteFriendById(friend_id, user_id) == 1) {
+                    return 1;
+                } else {
+                    // 手动判断哪一步的增删改操作失败，则手动抛出异常，事务回滚，
+                    // 所有的增删改操作回退到未操作之前，保证数据一致性
+                    // 如果未有异常，则增删改操作正常执行
+                    throw new MyThrowException("delete_failure");
+                }
+            } else {
+                throw new MyThrowException("delete_failure");
+            }
+        } catch (MyThrowException e) {
+            //System.out.println("e========================" + e.getMessage());
+            throw e;
+        }
 
     }
 
