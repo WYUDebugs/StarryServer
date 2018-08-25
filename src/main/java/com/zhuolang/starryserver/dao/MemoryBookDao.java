@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
-public interface MemoryBookDao {
+public interface MemoryBookDao {//添加Dao的test时，选中类名，右键go to->test-创建->选择Junit4,选择添加的测试方法，finish
 
     /**
      * 通过title添加memoryBook

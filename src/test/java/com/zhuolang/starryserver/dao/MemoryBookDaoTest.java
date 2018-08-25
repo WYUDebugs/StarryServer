@@ -29,4 +29,16 @@ public class MemoryBookDaoTest {
     @Test
     public void findMemoryBookByTitle() {
     }
+
+    @Test
+    public void findAllMemoryBookDESC() {
+    }
+
+    @Test
+    public void deleteAllMemoryBook() {
+    }
+
+    @Test
+    public void findMemoryBookById() {
+    }
 }
