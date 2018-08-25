@@ -24,7 +24,8 @@
         WHERE id=#{id}
     </delete>
 
-    <select id="findAllMemoryCover" resultType="com.zhuolang.starryserver.entity.MemoryCover">
+    <!-- 查找所有 memoryCover-->
+    <select id="findAllMemoryCoverDESC" resultType="com.zhuolang.starryserver.entity.MemoryCover">
         SELECT *
         from memory_cover_tab
         ORDER BY id DESC
