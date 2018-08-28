@@ -191,7 +191,7 @@ public class UserController extends BaseExceptionHandleAction {
      */
     @ResponseBody
     @RequestMapping(value = "/updateHeadImage")
-    public ResultDto uploadFile(@RequestParam(value = "headimage") MultipartFile file, HttpServletRequest request) {
+    public ResultDto uploadFile(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
         //单个文件上传，返回文件上传后的名字
         String resultStr = FileUploadUtil.uploadFile(file,request);
         //匹配User的id
@@ -203,7 +203,8 @@ public class UserController extends BaseExceptionHandleAction {
             int num = userService.changeHeadimageById(id,resultStr);  //传入参数，通过id更改headimage
             //判断更改是否成功
             if(num == 1) {
-                return new ResultDto(200, "success", null);
+                User user = userService.findUserById(id);
+                return new ResultDto(200, "success", user);
             }
             else {
                 return new ResultDto(200,"fail",null);
