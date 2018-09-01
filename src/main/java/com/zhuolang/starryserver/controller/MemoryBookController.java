@@ -35,8 +35,9 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
     private UserService userService;
 
     /**
-     * 通过title添加memoryBook
-     *
+     * 1、通过title添加memoryBook
+     *  添加纪念册时，获取默认封面，将第一个封面的文件名字存进纪念册
+     *  即 获取MemoryCover的列表的第一条信息的path作为纪念册cover字段
      * @param request
      * @param response
      * @return
@@ -58,7 +59,100 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
     }
 
     /**
-     * 通过 id 删除 memoryBook
+     * 2、通过 id 更改 memoryBook 的 title
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody//将返回数据处理为 json
+    @RequestMapping(value = "/changeMemoryBookTitle")
+    public ResultDto changMemoryBookTitle(HttpServletRequest request, HttpServletResponse response) {
+        int id = parseInt(request.getParameter("id"));
+        String title = request.getParameter("title");
+
+        if ((memoryBookService.changeMemoryBookTitle(id, title)) == 1) {
+            return new ResultDto(200, "success", null);
+        } else {
+            return new ResultDto(200, "fail", null);
+        }
+    }
+
+    /**
+     * 3、通过 id 更改 memoryBook 的 cover，上传自己的封面
+     *
+     * @param file
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回数据处理为 json
+    @RequestMapping(value = "/changeMemoryBookCover")
+    public ResultDto changeMemoryBookCover(MultipartFile file, HttpServletRequest request) {
+
+        String uploadResult = FileUploadUtil.uploadFile(file, request);//uploadResult记录文件上传结果，上传失败为null，成功为文件名
+        if (uploadResult == null) {
+            return ResultDto.error();
+        } else {
+            //文件上传成功时
+            int id = parseInt(request.getParameter("id"));
+            int  changeResult = memoryBookService.changeMemoryBookCover(id, uploadResult);
+
+            if (changeResult == 1) {
+                return new ResultDto(200, "success", null);
+            } else {
+                return new ResultDto(200, "fail", null);
+            }
+        }
+    }
+
+    /**
+     * 4、通过 id 更改 memoryBook 的 cover，选择系统默认的封面
+     *
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回数据处理为 json
+    @RequestMapping(value = "/selectUpdateMemoryBookCover")
+    public ResultDto selectUpdateMemoryBookCover(HttpServletRequest request) {
+
+        int id = parseInt(request.getParameter("id"));
+        String cover = request.getParameter("cover");
+        int  changeResult = memoryBookService.changeMemoryBookCover(id, cover);
+
+        if (changeResult == 1) {
+            return new ResultDto(200, "success", null);
+        } else {
+            return new ResultDto(200, "fail", null);
+        }
+
+    }
+
+    /**
+     * 5、通过 id 查找 memoryBook
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findMemoryBookById")
+    public ResultDto findMemoryBookById(HttpServletRequest request, HttpServletResponse response) {
+        int id = parseInt(request.getParameter("id"));
+
+        MemoryBook memoryBook = memoryBookService.findMemoryBookById(id);
+        if (memoryBook != null) {
+            return new ResultDto(200, "success", memoryBook);
+        } else {
+            return new ResultDto(200, "memory_book_id_not_exist", null);
+        }
+    }
+
+    /**
+     * 6、通过 id 删除 memoryBook
+     * 删除纪念册步骤
+     *  1、删除纪念册中每个片段的评
+     *  2、删除纪念册的每个片段
+     *  3、删除纪念册中的好友
+     *  4、删除纪念册
      *
      * @param request
      * @return
@@ -77,6 +171,37 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
             return new ResultDto(200, "success", null);
         } else {
             return new ResultDto(200, "fail", null);
+        }
+    }
+
+    /**
+     * 7、通过用户id获取他的所有有关的纪念册列表
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回数据处理为json
+    @RequestMapping(value = "/findMemoryListByUserId")
+    public ResultDto findMemoryListByUserId(HttpServletRequest request){
+        return null;
+    }
+
+    /**
+     * 8、通过 title 的关键字模糊搜索 memoryBook
+     * @param request
+     * @param response
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findMemoryBookByTitle")
+    public ResultDto findMemoryBookByTitle(HttpServletRequest request, HttpServletResponse response) {
+        String title = request.getParameter("title");
+        title = "%" + title + "%";
+        List<MemoryBook> memoryBook = memoryBookService.findMemoryBookListByTitle(title);
+
+        if (memoryBook != null) {
+            return new ResultDto(200, "success", memoryBook);
+        } else {
+            return new ResultDto(200, "nodata", null);
         }
     }
 
@@ -124,73 +249,6 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
     }
 
     /**
-     * 通过 id 更改 memoryBook 的 title
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    @ResponseBody//将返回数据处理为 json
-    @RequestMapping(value = "/changeMemoryBookTitle")
-    public ResultDto changMemoryBookTitle(HttpServletRequest request, HttpServletResponse response) {
-        int id = parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-
-        if ((memoryBookService.changeMemoryBookTitle(id, title)) == 1) {
-            return new ResultDto(200, "success", null);
-        } else {
-            return new ResultDto(200, "fail", null);
-        }
-    }
-
-    /**
-     * 通过 id 更改 memoryBook 的 cover
-     *
-     * @param file
-     * @param request
-     * @return
-     */
-    @ResponseBody//将返回数据处理为 json
-    @RequestMapping(value = "/changeMemoryBookCover")
-    public ResultDto changeMemoryBookCover(MultipartFile file, HttpServletRequest request) {
-
-        String uploadResult = FileUploadUtil.uploadFile(file, request);//uploadResult记录文件上传结果，上传失败为null，成功为文件名
-        if (uploadResult == null) {
-            return ResultDto.error();
-        } else {
-            //文件上传成功时
-            int id = parseInt(request.getParameter("id"));
-            int  changeResult = memoryBookService.changeMemoryBookCover(id, uploadResult);
-
-            if (changeResult == 1) {
-                return new ResultDto(200, "success", null);
-            } else {
-                return new ResultDto(200, "fail", null);
-            }
-        }
-    }
-
-    /**
-     * 通过 title 搜索 memoryBook
-     * @param request
-     * @param response
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/findMemoryBookByTitle")
-    public ResultDto findMemoryBookByTitle(HttpServletRequest request, HttpServletResponse response) {
-        String title = request.getParameter("title");
-
-        MemoryBook memoryBook = memoryBookService.findMemoryBookByTitle(title);
-        
-        if (memoryBook != null) {
-            return new ResultDto(200, "success", memoryBook);
-        } else {
-            return new ResultDto(200, "nodata", null);
-        }
-    }
-
-    /**
      * 查找所有 memoryBook
      * @param request
      * @param response
@@ -208,23 +266,6 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
         }
     }
 
-    /**
-     * 通过 id 查找 memoryBook
-     * @param request
-     * @param response
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/findMemoryBookById")
-    public ResultDto findMemoryBookById(HttpServletRequest request, HttpServletResponse response) {
-        int id = parseInt(request.getParameter("id"));
 
-        MemoryBook memoryBook = memoryBookService.findMemoryBookById(id);
-        if (memoryBook != null) {
-            return new ResultDto(200, "success", memoryBook);
-        } else {
-            return new ResultDto(200, "memory_book_id_not_exist", null);
-        }
-    }
 
 }

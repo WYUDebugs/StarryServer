@@ -60,7 +60,7 @@ public interface MemoryBookService {
      * @param title
      * @return
      */
-    MemoryBook findMemoryBookByTitle(String title);
+    List<MemoryBook> findMemoryBookListByTitle(String title);
 
     /**
      * 查找所有 memoryBook

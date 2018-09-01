@@ -59,7 +59,7 @@ public interface MemoryBookDao {//添加Dao的test时，选中类名，右键go 
      * @param title
      * @return
      */
-    MemoryBook findMemoryBookByTitle(String title);
+    List<MemoryBook> findMemoryBookListByTitle(String title);
 
     /**
      * 查找所有 memoryBook

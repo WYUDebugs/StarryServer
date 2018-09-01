@@ -50,10 +50,10 @@
     </update>
 
     <!--通过 title 查找 memoryBook-->
-    <select id="findMemoryBookByTitle" resultType="com.zhuolang.starryserver.entity.MemoryBook" parameterType="String">
+    <select id="findMemoryBookListByTitle" resultType="com.zhuolang.starryserver.entity.MemoryBook" parameterType="String">
         SELECT *
         FROM memory_book_tab
-        WHERE title=#{title}
+        WHERE title LIKE #{title}
     </select>
 
     <!--查找所有 memoryBook，并按创建时间降序排序-->

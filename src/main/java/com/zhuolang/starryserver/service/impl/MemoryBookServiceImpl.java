@@ -25,9 +25,10 @@ public class MemoryBookServiceImpl implements MemoryBookService {
      */
     public ResultDto addMemoryBook(int owner, String title) {
         //如果已存在相同 title 的 memoryBook
-        if (memoryBookDao.findMemoryBookByTitle(title) != null) {
-            return new ResultDto(200, "memory_book_exist", null);
-        }
+        // 标题可以相同
+//        if (memoryBookDao.findMemoryBookByTitle(title) != null) {
+//            return new ResultDto(200, "memory_book_exist", null);
+//        }
         //如果不存在相同 title 的 memoryBook，则进行创建
         if (memoryBookDao.addMemoryBook(owner, title, new Date()) == 1) {
             return new ResultDto(200, "success", null);
@@ -42,6 +43,11 @@ public class MemoryBookServiceImpl implements MemoryBookService {
      * @return
      */
     public int deleteMemoryBook(int id) {
+        //删除纪念册步骤
+        // 1、删除纪念册中每个片段的评论
+        // 2、删除纪念册的每个片段
+        // 3、删除纪念册中的好友
+        // 4、删除纪念册
         return memoryBookDao.deleteMemoryBook(id);
     }
 
@@ -83,8 +89,8 @@ public class MemoryBookServiceImpl implements MemoryBookService {
      * @param title
      * @return
      */
-    public MemoryBook findMemoryBookByTitle(String title) {
-        return memoryBookDao.findMemoryBookByTitle(title);
+    public List<MemoryBook> findMemoryBookListByTitle(String title) {
+        return memoryBookDao.findMemoryBookListByTitle(title);
     }
 
     /**
