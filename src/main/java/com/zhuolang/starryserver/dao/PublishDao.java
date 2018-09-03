@@ -8,6 +8,8 @@ import java.util.List;
 
 
 public interface PublishDao {
+
+    int installPublish(@Param("publish") Publish publish);
     /**
      * 记录帖子信息
      * @param publisher

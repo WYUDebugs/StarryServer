@@ -5,6 +5,10 @@
 
 <mapper namespace="com.zhuolang.starryserver.dao.PublishDao">
 
+    <insert id="installPublish" useGeneratedKeys="true" keyProperty="publish.id" >
+        INSERT INTO public_tab(publisher,time,content,address,type,times_of_browse,times_of_praise,number_of_comments,collection_number)
+                VALUES (#{publish.publisher},#{publish.time},#{publish.content},#{publish.address},#{publish.type},0,0,0,0);
+    </insert>
 
     <!--记录帖子的信息-->
     <insert id="publish">
@@ -44,6 +48,7 @@
         SET  collection_number=#{concernNum}
         WHERE id=#{id}
     </insert>
+
 
 
 

@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.entity;
 
 
 import java.util.Date;
+import java.util.List;
 
 public class Publish {
     private int id;
@@ -14,6 +15,7 @@ public class Publish {
     private int collection_number;  //关注收藏数
     private String address;  //定位的地址
     private int type;  //动态的类型，默认为0为发布的动态，1为分享过来的动态
+    private List<PublishImage> imageList;
 
     public int getId() {
         return id;
@@ -95,6 +97,14 @@ public class Publish {
         this.type = type;
     }
 
+    public List<PublishImage> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<PublishImage> imageList) {
+        this.imageList = imageList;
+    }
+
     @Override
     public String toString() {
         return "Publish{" +
@@ -108,6 +118,7 @@ public class Publish {
                 ", collection_number=" + collection_number +
                 ", address='" + address + '\'' +
                 ", type=" + type +
+                ", imageList=" + imageList +
                 '}';
     }
 }

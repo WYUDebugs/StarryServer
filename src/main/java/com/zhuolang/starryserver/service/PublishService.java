@@ -7,6 +7,9 @@ import java.util.List;
 
 
 public interface PublishService {
+
+    int sendPublic(Publish publish,List<String> imageList);
+
     /**
      * 记录帖子的信息
      * 发布或分享帖子时会用到
