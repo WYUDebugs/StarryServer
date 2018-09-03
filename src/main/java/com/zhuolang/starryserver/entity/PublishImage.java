@@ -1,15 +1,24 @@
 package com.zhuolang.starryserver.entity;
 
 public class PublishImage {
-    private int publicID;
+    private int id;
+    private int publicId;
     private String path;
 
-    public int getPublicID() {
-        return publicID;
+    public int getId() {
+        return id;
     }
 
-    public void setPublicID(int publicID) {
-        this.publicID = publicID;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(int publicId) {
+        this.publicId = publicId;
     }
 
     public String getPath() {
@@ -20,5 +29,12 @@ public class PublishImage {
         this.path = path;
     }
 
-
+    @Override
+    public String toString() {
+        return "PublishImage{" +
+                "id=" + id +
+                ", publicId=" + publicId +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }

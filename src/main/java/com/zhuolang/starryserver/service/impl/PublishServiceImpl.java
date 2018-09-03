@@ -3,6 +3,7 @@ package com.zhuolang.starryserver.service.impl;
 import com.zhuolang.starryserver.dao.*;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Publish;
+import com.zhuolang.starryserver.entity.PublishDto;
 import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.PublishService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,22 @@ public class PublishServiceImpl implements PublishService {
             throw e;
         }
         return 1;
+    }
+
+    /**
+     * 通过用户id，获取用户及好友的帖子信息，同时带出图片、发布人的名字、头像
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<PublishDto> findPublishListByUserId(int userId) {
+        List<Integer> list = new ArrayList<>();
+        list.add(userId);
+        List<Integer> friendIdList = friendDao.findFriendIdByUseId(userId);//获取user朋友的id
+        if (friendIdList != null && friendIdList.size() > 0) {
+            list.addAll(friendIdList);
+        }
+        return publishDao.findPublishListByUserIdList(userId,list);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.service;
 
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Publish;
+import com.zhuolang.starryserver.entity.PublishDto;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface PublishService {
 
     int sendPublic(Publish publish,List<String> imageList);
+
+    List<PublishDto> findPublishListByUserId(int userId);
 
     /**
      * 记录帖子的信息

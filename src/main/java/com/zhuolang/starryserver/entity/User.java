@@ -121,4 +121,23 @@ public class User {
     public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                ", birthday='" + birthday + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", address='" + address + '\'' +
+                ", typelabel='" + typelabel + '\'' +
+                ", PhoneId='" + PhoneId + '\'' +
+                ", registerTime='" + registerTime + '\'' +
+                ", signature='" + signature + '\'' +
+                '}';
+    }
 }

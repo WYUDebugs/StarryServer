@@ -49,7 +49,62 @@
         WHERE id=#{id}
     </insert>
 
+    <!--通过用户id查找他的所有帖子信息，包括用户信息、帖子图片-->
+    <resultMap type="com.zhuolang.starryserver.entity.PublishDto" id="PublishResult">
+        <id column="id" property="id"/>
+        <result column="publisher" property="publisher"/>
+        <result column="time" property="time"/>
+        <result column="content" property="content"/>
+        <result column="times_of_browse" property="times_of_browse"/>
+        <result column="times_of_praise" property="times_of_praise"/>
+        <result column="number_of_comments" property="number_of_comments"/>
+        <result column="collection_number" property="collection_number"/>
+        <result column="address" property="address"/>
+        <result column="type" property="type"/>
+        <!--一对一查询-->
+        <association property="user" javaType="com.zhuolang.starryserver.entity.User">
+            <!-- id:声明主键，表示publisher是关联查询对象的唯一标识-->
+            <id property="id" column="publisher" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+        <collection property="imageList" resultMap="ImageResult"/>
+    </resultMap>
+    <!--一对多查询-->
+    <resultMap type="com.zhuolang.starryserver.entity.PublishImage" id="ImageResult">
+        <result column="id" property="id"/>
+        <result column="public_id" property="publicId"/>
+        <result column="path" property="path"/>
+    </resultMap>
+    <select id="findPublishListByUserId" resultType="com.zhuolang.starryserver.entity.PublishDto" resultMap="PublishResult">
+        SELECT P.*,I.*,U.phone,U.name,U.headimage
+        FROM public_tab P
+        LEFT OUTER JOIN public_image_tab I ON P.id=I.public_id
+        LEFT OUTER JOIN user_tab U ON P.publisher=U.id
+        WHERE P.publisher=#{userId}
+        ORDER BY time DESC ;
+    </select>
 
-
+    <!--通过用户id查找他的所有帖子信息，包括用户信息、帖子图片-->
+    <select id="findPublishListByUserIdList" resultType="com.zhuolang.starryserver.entity.PublishDto" resultMap="PublishResult">
+        SELECT P.*,I.*,U.phone,U.name,U.headimage
+        FROM public_tab P
+        LEFT OUTER JOIN public_image_tab I ON P.id=I.public_id
+        LEFT OUTER JOIN user_tab U ON P.publisher=U.id
+        <where>
+            <!-- foreach标签，进行遍历 -->
+            <!-- collection：遍历的集合，这里是QueryVo的ids属性 -->
+            <!-- item：遍历的项目，可以随便写，，但是和后面的#{}里面要一致 -->
+            <!-- open：在前面添加的sql片段 -->
+            <!-- close：在结尾处添加的sql片段 -->
+            <!-- separator：指定遍历的元素之间使用的分隔符 -->
+            <foreach collection="ids" item="item" open="P.publisher IN (" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </where>
+        ORDER BY time DESC ;
+    </select>
 
 </mapper>

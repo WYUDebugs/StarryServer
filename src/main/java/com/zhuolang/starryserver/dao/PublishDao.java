@@ -1,6 +1,7 @@
 package com.zhuolang.starryserver.dao;
 
 import com.zhuolang.starryserver.entity.Publish;
+import com.zhuolang.starryserver.entity.PublishDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -9,7 +10,22 @@ import java.util.List;
 
 public interface PublishDao {
 
+    /**
+     * 插入帖子
+     * @param publish
+     * @return
+     */
     int installPublish(@Param("publish") Publish publish);
+
+    /**
+     * 通过用户id查找他的所有帖子信息，包括用户信息、帖子图片
+     * @param userId
+     * @return
+     */
+    List<PublishDto> findPublishListByUserId(@Param("userId") int userId);
+
+    List<PublishDto> findPublishListByUserIdList(@Param("userId") int userId,@Param("ids") List<Integer> ids);
+
     /**
      * 记录帖子信息
      * @param publisher

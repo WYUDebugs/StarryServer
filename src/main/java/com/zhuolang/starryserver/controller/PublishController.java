@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.controller;
 
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Publish;
+import com.zhuolang.starryserver.entity.PublishDto;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
 import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.PublishImageService;
@@ -72,6 +73,23 @@ public class PublishController extends BaseExceptionHandleAction {
         } else {
             return ResultDto.error();
         }
+    }
+
+    /**
+     * 获取用户及其好友的帖子列表
+     * 通过用户id，获取用户及好友的帖子信息，同时带出图片、发布人的名字、头像
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/publishList")
+    public ResultDto publishList(HttpServletRequest request) {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        List<PublishDto> publishDtoList = publishService.findPublishListByUserId(userId);
+        if (publishDtoList != null&&publishDtoList.size()>0) {
+            return new ResultDto(200, "success", publishDtoList);
+        }
+        return new ResultDto(200, "nodata");
     }
 
     /**
