@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhuolang.starryserver.dao.PublishConcernDao">
+
+    <!-- 添加关注信息-->
+    <insert id="addConcernMan" >
+        INSERT
+        INTO public_concern_tab(concern_people,concern_public,concern_time)
+        VALUES (#{concernPeople},#{concernPublish},#{concernTime})
+    </insert>
+
+    <!--通过concern_people和concern_public查询关注表的信息-->
+    <select id="checkByAIdPId" resultType="com.zhuolang.starryserver.entity.PublishConcern" >
+        SELECT *
+        FROM public_concern_tab
+        WHERE concern_people=#{peopleId} AND concern_public=#{publishId}
+    </select>
+
+    <!--通过关注表的id删除关注的信息-->
+    <delete id="deleteById">
+        DELETE
+        FROM public_concern_tab
+        WHERE id=#{id}
+    </delete>
+
+    <!--通过关注表id获取所有关注人的id-->
+    <select id="findMansIdByPublishId" resultType="java.lang.Integer">
+        SELECT concern_people
+        FROM public_concern_tab
+        WHERE concern_public=#{publishId}
+    </select>
+
+    <!-- 通过帖子id删除关注信息,删除帖子时会用到-->
+    <delete id="deleteByPublishId">
+        DELETE
+        FROM public_concern_tab
+        WHERE concern_public=#{publishId}
+    </delete>
+
+
+</mapper>

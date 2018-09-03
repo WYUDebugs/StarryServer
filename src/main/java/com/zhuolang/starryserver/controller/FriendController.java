@@ -152,4 +152,23 @@ public class FriendController extends BaseExceptionHandleAction {
         }
     }
 
+    /**
+     * create by HuangMingPan
+     * 通过userID获取friendId
+     * 朋友圈展示帖子时会用到
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/findFriendId")
+    public ResultDto findFriendIdByUserID(HttpServletRequest request) {
+        int userId=Integer.parseInt(request.getParameter("userId"));
+        List<Integer> friendIdList=friendService.findFriendIdByUseId(userId);
+        if (friendIdList != null && friendIdList.size() > 0){
+            return new ResultDto(200,"success",friendIdList);
+        }else {
+            return new ResultDto(200,"fail",null);
+        }
+    }
+
 }

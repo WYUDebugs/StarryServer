@@ -50,4 +50,6 @@ public interface FriendService {
      * @param user_id
      */
     List<Friend> findAllFriendASC(int user_id);
+
+    List<Integer> findFriendIdByUseId(int user_id);
 }

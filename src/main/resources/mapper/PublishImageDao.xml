@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhuolang.starryserver.dao.PublishImageDao">
+
+    <!--添加帖子图片到数据库-->
+    <insert id="addPublishImage">
+        INSERT INTO public_image_tab(public_id,path)
+        VALUES (#{public_id},#{path});
+    </insert>
+
+   <!-- 通过public_id 删除图片表对应的数据-->
+    <delete id="deleteImageByPublishId">
+        DELETE
+        FROM public_image_tab
+        WHERE public_id=#{public_id}
+    </delete>
+
+    <!--通过public_id 查询对应的图片-->
+    <select id="findImageByPublicId" parameterType="int" resultType="com.zhuolang.starryserver.entity.PublishImage">
+        SELECT  path
+        FROM public_image_tab
+        WHERE public_id=#{public_id}
+    </select>
+
+
+
+</mapper>

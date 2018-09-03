@@ -6,15 +6,45 @@
 <mapper namespace="com.zhuolang.starryserver.dao.PublishDao">
 
 
+    <!--记录帖子的信息-->
     <insert id="publish">
         INSERT INTO public_tab(publisher,time,content,address,type)
         VALUES (#{publisher},#{time},#{content},#{address},#{type});
     </insert>
 
+   <!-- 将帖子的信息以时间降序排序-->
     <select id="showPostDESC"  resultType="com.zhuolang.starryserver.entity.Publish">
         SELECT *
         FROM public_tab
+        WHERE publisher=#{publisher}
         ORDER BY time DESC ;
     </select>
+    <!--通过帖子id删除对应帖子-->
+    <delete id="deletePublish">
+        DELETE
+        FROM public_tab
+        WHERE id=#{id}
+    </delete>
+    <!--通过帖子id查询帖子的信息-->
+    <select id="findPublishById" resultType="com.zhuolang.starryserver.entity.Publish">
+       SELECT *
+       FROM public_tab
+       WHERE id=#{id}
+    </select>
+    <!--通过帖子id更新帖子的点赞数-->
+    <insert id="updatePublishById" >
+        UPDATE public_tab
+        SET  times_of_praise=#{praiseNum}
+        WHERE id=#{id}
+    </insert>
+
+    <!--通过帖子id更新帖子的关注收藏数-->
+    <insert id="updateConcernNumById" >
+        UPDATE public_tab
+        SET  collection_number=#{concernNum}
+        WHERE id=#{id}
+    </insert>
+
+
 
 </mapper>

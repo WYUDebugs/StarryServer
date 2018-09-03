@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhuolang.starryserver.dao.PublishGoodDao">
+
+   <!-- 添加点赞信息-->
+    <insert id="addPraiseMan" >
+        INSERT
+        INTO public_good_tab(publish_id,man_of_praise,time_of_praise)
+        VALUES (#{publishId},#{manOfPraise},#{time})
+    </insert>
+    <!--通过publishId和manOfPraise查询点赞信息-->
+    <select id="checkManByAIdPId" resultType="com.zhuolang.starryserver.entity.PublishGood" >
+        SELECT *
+        FROM public_good_tab
+        WHERE publish_id=#{pId} AND man_of_praise=#{mId}
+    </select>
+    <!--通过点赞表id删除点赞信息-->
+    <delete id="deleteById">
+        DELETE
+        FROM public_good_tab
+        WHERE id=#{id}
+    </delete>
+    <!--通过帖子id获取所有点赞人的id-->
+    <select id="findMansIdByPublishId" resultType="java.lang.Integer">
+        SELECT man_of_praise
+        FROM public_good_tab
+        WHERE publish_id=#{publishId}
+    </select>
+   <!-- 通过帖子id删除点赞信息,删除帖子时会用到-->
+    <delete id="deleteByPublishId">
+        DELETE
+        FROM public_good_tab
+        WHERE publish_id=#{publishId}
+    </delete>
+
+</mapper>

@@ -92,4 +92,11 @@
         DELETE FROM user_tab
         WHERE phone=#{phone}
     </delete>
+
+    <!--create by HMP,通过id获取username.获取点赞人的名字需要用到-->
+    <select id="findUserNameById" resultType="java.lang.String">
+        SELECT name
+        FROM user_tab
+        WHERE id=#{id}
+    </select>
 </mapper>

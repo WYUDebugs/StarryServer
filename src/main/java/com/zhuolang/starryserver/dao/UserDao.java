@@ -86,4 +86,13 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * @return 删除成功返回1，没有则0
      */
     int deleteUserByPhone(@Param("phone") String phone);
+
+    /**
+     * crete by HMP
+     * 通过id获取username
+     * 获取点赞人的名字需要用到
+     * @param id
+     * @return
+     */
+    String findUserNameById(@Param("id")int id);
 }

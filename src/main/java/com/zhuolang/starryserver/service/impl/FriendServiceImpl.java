@@ -138,4 +138,16 @@ public class FriendServiceImpl implements FriendService {
     public List<Friend> findAllFriendASC(int user_id) {
         return friendDao.findAllFriendASC(user_id);
     }
+
+    /**
+     * create by HuangMingPan
+     * 通过user_id获取friend_id
+     * 展示朋友圈帖子时会用到
+     * @param user_id
+     * @return
+     */
+    @Override
+    public List<Integer> findFriendIdByUseId(int user_id) {
+        return  friendDao.findFriendIdByUseId(user_id);
+    }
 }

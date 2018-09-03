@@ -1,9 +1,7 @@
 package com.zhuolang.starryserver.dao;
 
 import com.zhuolang.starryserver.entity.Friend;
-import com.zhuolang.starryserver.entity.User;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.Date;
 import java.util.List;
 
@@ -57,4 +55,14 @@ public interface FriendDao {
      * @param user_id
      */
     List<Friend> findAllFriendASC(@Param("user_id") int user_id);
+
+    /**
+     * create by HuangMingPan
+     * 通过user_id获取friend_id
+     * 展示朋友圈的帖子时需要用到
+     * @param user_id
+     * @return
+     */
+    List<Integer>  findFriendIdByUseId(@Param("user_id")int user_id);
+
 }
