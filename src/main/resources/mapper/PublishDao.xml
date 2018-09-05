@@ -73,7 +73,7 @@
     </resultMap>
     <!--一对多查询-->
     <resultMap type="com.zhuolang.starryserver.entity.PublishImage" id="ImageResult">
-        <result column="id" property="id"/>
+        <result column="pm_id" property="pmId"/>
         <result column="public_id" property="publicId"/>
         <result column="path" property="path"/>
     </resultMap>

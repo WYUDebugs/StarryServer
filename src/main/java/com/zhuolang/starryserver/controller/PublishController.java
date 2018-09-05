@@ -44,35 +44,39 @@ public class PublishController extends BaseExceptionHandleAction {
     @ResponseBody//将返回的数据处理为json
     @RequestMapping(value = "/sendPublic")
     public ResultDto sendPublic(@RequestParam(value = "file")MultipartFile[] file, HttpServletRequest request) {
-        //保存图片到服务器
-        List<String> fileNameList = FileUploadUtil.uploadFileList(file, request);
-        if (fileNameList != null && fileNameList.size() > 0) {
-            Publish publish = new Publish();
-            publish.setPublisher(parseInt(request.getParameter("publisher"))); //发布人的id
-            publish.setContent(request.getParameter("content"));  //发布的文字内容
-            publish.setAddress(request.getParameter("address"));  //定位的地址
-            publish.setType(parseInt(request.getParameter("type")));
-            publish.setTime(new Date());
-
-            int result = 0;
-            try {//将帖子内容、图片信息插入数据库
-                result = publishService.sendPublic(publish,fileNameList);
-                //捕捉事务控制抛出的异常，防止程序异常崩溃
-            } catch (MyThrowException e) {
-                System.out.println("异常捕捉：MyThrowException："+e.getMessage());
-                e.printStackTrace();
-            } catch (Exception e) {
-                System.out.println("异常捕捉：Exception："+e.getMessage());
-                e.printStackTrace();
-            }
-            if (result == 1) {
-                return new ResultDto(200, "publish_success", null);
+        Publish publish = new Publish();
+        publish.setPublisher(parseInt(request.getParameter("publisher"))); //发布人的id
+        publish.setContent(request.getParameter("content"));  //发布的文字内容
+        publish.setAddress(request.getParameter("address"));  //定位的地址
+        publish.setType(parseInt(request.getParameter("type")));
+        publish.setTime(new Date());
+        int result = 0;
+        if (file.length > 0) {
+            //保存图片到服务器
+            List<String> fileNameList = FileUploadUtil.uploadFileList(file, request);
+            if (fileNameList != null && fileNameList.size() > 0) {
+                try {//将帖子内容、图片信息插入数据库
+                    result = publishService.sendPublic(publish, fileNameList);
+                    //捕捉事务控制抛出的异常，防止程序异常崩溃
+                } catch (MyThrowException e) {
+                    System.out.println("异常捕捉：MyThrowException：" + e.getMessage());
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    System.out.println("异常捕捉：Exception：" + e.getMessage());
+                    e.printStackTrace();
+                }
             } else {
-                return new ResultDto(200, "publish_failure", null);
+                return ResultDto.error();
             }
         } else {
-            return ResultDto.error();
+            result = publishService.sendPublicNoImage(publish);
         }
+        if (result == 1) {
+            return new ResultDto(200, "publish_success", null);
+        } else {
+            return new ResultDto(200, "publish_failure", null);
+        }
+
     }
 
     /**

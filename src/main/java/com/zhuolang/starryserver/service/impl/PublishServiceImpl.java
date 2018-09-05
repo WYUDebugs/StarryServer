@@ -58,6 +58,11 @@ public class PublishServiceImpl implements PublishService {
         return 1;
     }
 
+    @Override
+    public int sendPublicNoImage(Publish publish) {
+        return publishDao.installPublish(publish);
+    }
+
     /**
      * 通过用户id，获取用户及好友的帖子信息，同时带出图片、发布人的名字、头像
      * @param userId

@@ -11,6 +11,8 @@ public interface PublishService {
 
     int sendPublic(Publish publish,List<String> imageList);
 
+    int sendPublicNoImage(Publish publish);
+
     List<PublishDto> findPublishListByUserId(int userId);
 
     /**
