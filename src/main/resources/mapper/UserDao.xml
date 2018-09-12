@@ -60,7 +60,7 @@
     </update>
 
     <!--通过id修改User的基本信息-->
-    <update id="changeUserById">
+    <update id="changeUserById" parameterType="com.zhuolang.starryserver.entity.User">
         update user_tab
         <set>
             <if test="user.name != null">

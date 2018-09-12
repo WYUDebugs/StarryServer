@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -221,18 +222,30 @@ public class UserController extends BaseExceptionHandleAction {
     @ResponseBody//将返回的数据处理为json
     @RequestMapping(value = "/changeUserById")
     public ResultDto changeUserById(HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("id"));  //用parseInt()方法将字符串转换成int数据(！！小心！！)
-        User user = userService.findUserById(id);
-
-        //传入各项参数
-        user.setName(request.getParameter("name"));
-        user.setGender(Integer.parseInt(request.getParameter("gender")));
-        user.setAge(Integer.parseInt(request.getParameter("age")));
-        user.setBirthday(request.getParameter("birthday"));
-        user.setAddress(request.getParameter("address"));
-        user.setTypelabel(request.getParameter("typelabel"));
-        user.setSignature(request.getParameter("signature"));
-        //修改并判断修改是否成功
+        int id=Integer.parseInt(request.getParameter("id"));
+        User user=new User();
+        user.setId(id);
+        if (request.getParameter("name")!=null) {
+            user.setName(request.getParameter("name"));
+        }
+        if (request.getParameter("gender")!=null){
+            user.setGender(Integer.parseInt(request.getParameter("gender")));
+        }
+        if (request.getParameter("age")!=null) {
+            user.setAge(Integer.parseInt(request.getParameter("age")));
+        }
+        if (request.getParameter("birthday")!= null) {
+            user.setBirthday(request.getParameter("birthday"));
+        }
+        if (request.getParameter("address")!=null) {
+            user.setAddress(request.getParameter("address"));
+        }
+        if (request.getParameter("typelabel")!=null) {
+            user.setTypelabel(request.getParameter("typelabel"));
+        }
+        if (request.getParameter("signature")!=null) {
+            user.setSignature(request.getParameter("signature"));
+        }
         if(userService.changeUserById(user) == 1){
             return new ResultDto(200,"success",user);
         }else {
