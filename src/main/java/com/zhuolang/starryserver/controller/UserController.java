@@ -80,6 +80,26 @@ public class UserController extends BaseExceptionHandleAction {
         return resultDto;
     }
 
+    /**
+     *
+     * 用userId验证密码
+     * 修改密码时会用到
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/checkPsw")
+    public ResultDto checkPswById(HttpServletRequest request) {
+
+        //request.getParameter("phone")就是APP端传过来的请求参数
+        int id = Integer.parseInt(request.getParameter("id"));
+        String psw = request.getParameter("password");
+        ResultDto resultDto = userService.checkPswByUserId(id,psw);
+
+        return resultDto;
+    }
+
+
 
     /**
      * 通过phone查找用户的信息
@@ -224,6 +244,9 @@ public class UserController extends BaseExceptionHandleAction {
         int id=Integer.parseInt(request.getParameter("id"));
         User user=new User();
         user.setId(id);
+        if (request.getParameter("newPsw")!=null) {
+            user.setPassword(request.getParameter("newPsw"));
+        }
         if (request.getParameter("name")!=null) {
             user.setName(request.getParameter("name"));
         }

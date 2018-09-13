@@ -49,6 +49,7 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * 查找所有User，并按年龄降序排序好
      * @return
      */
+    User checkPswByUserId(@Param("id")int id,@Param("password")String password);
     List<User> findAllUserDESC();
 
     /**

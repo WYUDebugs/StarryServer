@@ -74,6 +74,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public ResultDto checkPswByUserId(int id, String password) {
+        User user=userDao.checkPswByUserId(id,password);
+        if (user == null) {
+            return new ResultDto(200, "failure", null);
+        }else {
+            return new ResultDto(200, "success", user);
+        }
+    }
+
     /**
      * 查找所有User，并按年龄降序排序好
      * @return

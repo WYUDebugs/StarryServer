@@ -42,6 +42,8 @@ public interface UserService {
      */
     ResultDto checkPassword(String phone,String password);
 
+    ResultDto checkPswByUserId(int id,String password);
+
     /**
      * 查找所有User，并按年龄降序排序好
      *

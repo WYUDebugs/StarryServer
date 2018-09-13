@@ -37,6 +37,12 @@
         FROM user_tab
         WHERE phone=#{phone} AND password=#{password}
     </select>
+    <!--通过userId和密码获取手机号-->
+    <select id="checkPswByUserId" resultType="com.zhuolang.starryserver.entity.User">
+        SELECT phone
+        FROM user_tab
+        WHERE id=#{id} AND password=#{password}
+    </select>
 
     <!--查找所有User，并按年龄降序排序好-->
     <select id="findAllUserDESC" resultType="com.zhuolang.starryserver.entity.User">
@@ -63,6 +69,9 @@
     <update id="changeUserById" parameterType="com.zhuolang.starryserver.entity.User">
         update user_tab
         <set>
+            <if test="user.password != null">
+                password =#{user.password},
+            </if>
             <if test="user.name != null">
                 name =#{user.name},
             </if>
