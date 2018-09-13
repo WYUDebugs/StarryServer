@@ -55,10 +55,9 @@ public interface UserDao {//添加UserDao的test时，选中类名UserDao，右�
      * 通过id和password更改phone
      *
      * @param id
-     * @param password
      * @return 更改成功返回1，没有则0
      */
-    int changePhoneById(@Param("id") int id ,@Param("password") String password, @Param("phone") String phone);
+    int changePhoneById(@Param("id") int id , @Param("phone") String phone);
 
     /**
      * 通过id修改headimage

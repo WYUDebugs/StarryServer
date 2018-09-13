@@ -45,11 +45,11 @@
         ORDER BY age DESC
     </select>
 
-    <!--通过id和password修改UserPhone-->
+    <!--通过id修改UserPhone-->
     <update id="changePhoneById" >
         UPDATE user_tab
         SET phone = #{phone}
-        WHERE id=#{id} AND password=#{password};
+        WHERE id=#{id}
     </update>
 
     <!--通过id修改headimage-->

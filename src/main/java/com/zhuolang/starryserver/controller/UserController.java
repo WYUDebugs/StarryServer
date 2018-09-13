@@ -175,9 +175,8 @@ public class UserController extends BaseExceptionHandleAction {
     public ResultDto changePhoneById(HttpServletRequest request, HttpServletResponse response){
         //request.getParameter("xxx")就是APP端传过来的请求参数
         int id = parseInt(request.getParameter("id"));   //用parseInt()方法将字符串转换成int数据(！！小心！！)
-        String password = request.getParameter("password");
         String phone = request.getParameter("phone");
-        if(userService.changePhoneById(id , password , phone) == 1){
+        if(userService.changePhoneById(id ,phone) == 1){
             return new ResultDto(200,"success",null);
         }else {
             return new ResultDto(200,"fail",null);
@@ -247,9 +246,9 @@ public class UserController extends BaseExceptionHandleAction {
             user.setSignature(request.getParameter("signature"));
         }
         if(userService.changeUserById(user) == 1){
-            return new ResultDto(200,"success",user);
+            return new ResultDto(200,"success");
         }else {
-            return new ResultDto(200,"fail",null);
+            return new ResultDto(200,"fail");
         }
     }
 

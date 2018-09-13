@@ -53,10 +53,9 @@ public interface UserService {
      * 通过id和password更改phone
      *
      * @param id
-     * @param password
      * @return 更改成功返回1，没有则0
      */
-    int changePhoneById(int id , String password , String phone);
+    int changePhoneById(int id , String phone);
 
     /**
      * 通过id修改headimage
