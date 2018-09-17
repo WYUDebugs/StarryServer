@@ -1,5 +1,6 @@
 package com.zhuolang.starryserver.service;
 
+import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.User;
 
 import java.util.List;
@@ -8,5 +9,6 @@ import java.util.List;
  */
 
 public interface PublishGoodService {
-    List<String> praise(int pId, int uId);
+    List<User> showPraise(int pId);
+    ResultDto praise(int pId, int uId);
 }

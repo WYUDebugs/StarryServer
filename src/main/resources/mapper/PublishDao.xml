@@ -29,25 +29,32 @@
         FROM public_tab
         WHERE id=#{id}
     </delete>
+
     <!--通过帖子id查询帖子的信息-->
-    <select id="findPublishById" resultType="com.zhuolang.starryserver.entity.Publish">
-       SELECT *
+    <select id="findPublishById" resultType="Integer">
+       SELECT times_of_praise
+       FROM public_tab
+       WHERE id=#{id}
+    </select>
+
+    <select id="findConcernNum" resultType="Integer">
+      SELECT collection_number
        FROM public_tab
        WHERE id=#{id}
     </select>
     <!--通过帖子id更新帖子的点赞数-->
-    <insert id="updatePublishById" >
+    <update id="updatePublishById" >
         UPDATE public_tab
         SET  times_of_praise=#{praiseNum}
         WHERE id=#{id}
-    </insert>
+    </update>
 
     <!--通过帖子id更新帖子的关注收藏数-->
-    <insert id="updateConcernNumById" >
+    <update id="updateConcernNumById" >
         UPDATE public_tab
         SET  collection_number=#{concernNum}
         WHERE id=#{id}
-    </insert>
+    </update>
 
 
     <resultMap type="com.zhuolang.starryserver.entity.PublishDto" id="PublishResult">

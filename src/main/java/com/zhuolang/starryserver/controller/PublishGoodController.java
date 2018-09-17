@@ -20,7 +20,7 @@ import static java.lang.Integer.parseInt;
  * Created by HuangMingPan on 2018/9/03.
  */
 @Controller
-@RequestMapping("praise")
+@RequestMapping("good")
 public class PublishGoodController extends BaseExceptionHandleAction {
 
     @Autowired
@@ -29,13 +29,21 @@ public class PublishGoodController extends BaseExceptionHandleAction {
     @ResponseBody//将返回的数据处理为json
     @RequestMapping(value = "/showPraiseMans")
     public ResultDto  showPraiseMans( HttpServletRequest request) {
-        int manId=parseInt(request.getParameter("mId")); //获取点赞人的id
         int publishId=parseInt(request.getParameter("pId")); //获取点赞的帖子的id
-        List<String> names= publishGoodService.praise(publishId,manId);
-        if (names != null & names.size() > 0) {
-            return new ResultDto(200, "success", names);
+        List<User> users= publishGoodService.showPraise(publishId);
+        if (users != null & users.size() > 0) {
+            return new ResultDto(200, "success", users);
         } else {
             return new ResultDto(200,"该帖子暂时还没有人点赞",null);
         }
+    }
+
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/praise")
+    public ResultDto  praise( HttpServletRequest request) {
+        int uId=parseInt(request.getParameter("mId")); //获取点赞人的id
+        int pId=parseInt(request.getParameter("pId")); //获取点赞的帖子的id
+        ResultDto resultDto=publishGoodService.praise(pId,uId);
+        return resultDto;
     }
 }

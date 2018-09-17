@@ -26,16 +26,33 @@ public class PublishConcernController extends BaseExceptionHandleAction {
     @Autowired
     private PublishConcernService publishConcernService;
 
+
+
+
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/collect")
+    public ResultDto  collect( HttpServletRequest request) {
+        int pId=parseInt(request.getParameter("pId")); //获取关注的帖子的id
+        int mId=parseInt(request.getParameter("mId")); //获取关注人的id
+        ResultDto resultDto=publishConcernService.collect(pId,mId);
+        return resultDto;
+    }
+
+    /**
+     * 返回关注此帖子的人的所有信息
+     * @param request
+     * @return
+     */
     @ResponseBody//将返回的数据处理为json
     @RequestMapping(value = "/showConcernMans")
     public ResultDto  showConcernMans( HttpServletRequest request) {
-        int manId=parseInt(request.getParameter("mId")); //获取关注人的id
-        int publishId=parseInt(request.getParameter("pId")); //获取关注的帖子的id
-        List<String> names=publishConcernService.concern(publishId,manId);
-        if (names != null & names.size() > 0) {
-            return new ResultDto(200, "success", names);
+        int pId=parseInt(request.getParameter("pId")); //获取关注的帖子的id
+        List<User> users=publishConcernService.showConcernMans(pId);
+        if (users != null & users.size() > 0) {
+            return new ResultDto(200, "success", users);
         } else {
             return new ResultDto(200,"该帖子暂时还没有人关注",null);
         }
     }
+
 }

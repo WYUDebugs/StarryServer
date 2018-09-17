@@ -53,19 +53,29 @@ public interface PublishDao {
     int deletePublish(@Param("id")int id);
 
     /**
-     * 通过帖子的id找到该帖子
+     * 通过帖子的id得到点赞数
      * @param id
      * @return
      */
-    Publish findPublishById(@Param("id")int id);
+
+    Integer findPublishById(@Param("id")int id);
+
+    /**
+     * 通过帖子的id得到关注收藏数
+     * @param id
+     * @return
+     */
+    Integer findConcernNum(@Param("id")int id);
 
     /**
      * 通过帖子id更新点赞数
+     * 点赞，点赞数+1
      * @param praiseNum
      * @param id
      * @return
      */
     int updatePublishById(@Param("praiseNum")int praiseNum,@Param("id")int id);
+
 
     /**
      * 通过帖子的id更新关注收藏数
