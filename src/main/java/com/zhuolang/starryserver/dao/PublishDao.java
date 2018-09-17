@@ -68,6 +68,13 @@ public interface PublishDao {
     Integer findConcernNum(@Param("id")int id);
 
     /**
+     * 通过帖子的id得到评论数
+     * @param id
+     * @return
+     */
+    Integer findCommentNum(@Param("id")int id);
+
+    /**
      * 通过帖子id更新点赞数
      * 点赞，点赞数+1
      * @param praiseNum
@@ -84,4 +91,12 @@ public interface PublishDao {
      * @return
      */
     int updateConcernNumById(@Param("concernNum")int concernNum,@Param("id")int id);
+
+    /**
+     * 通过帖子id更新评论数
+     * @param cNum
+     * @param id
+     * @return
+     */
+    int updateCommentNum(@Param("cNum")int cNum,@Param("id")int id);
 }

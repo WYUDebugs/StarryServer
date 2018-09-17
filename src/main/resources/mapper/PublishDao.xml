@@ -30,22 +30,38 @@
         WHERE id=#{id}
     </delete>
 
-    <!--通过帖子id查询帖子的信息-->
+    <!--通过帖子id查询帖子的点赞数-->
     <select id="findPublishById" resultType="Integer">
        SELECT times_of_praise
        FROM public_tab
        WHERE id=#{id}
     </select>
 
+   <!-- 通过帖子id查询帖子的收藏关注数-->
     <select id="findConcernNum" resultType="Integer">
       SELECT collection_number
        FROM public_tab
        WHERE id=#{id}
     </select>
+
+    <!-- 通过帖子id查询帖子的评论数-->
+    <select id="findCommentNum" resultType="Integer">
+      SELECT number_of_comments
+       FROM public_tab
+       WHERE id=#{id}
+    </select>
+
     <!--通过帖子id更新帖子的点赞数-->
     <update id="updatePublishById" >
         UPDATE public_tab
         SET  times_of_praise=#{praiseNum}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过帖子id更新帖子的评论数数-->
+    <update id="updateCommentNum" >
+        UPDATE public_tab
+        SET  number_of_comments=#{cNum}
         WHERE id=#{id}
     </update>
 
