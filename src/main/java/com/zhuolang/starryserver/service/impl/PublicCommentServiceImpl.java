@@ -4,11 +4,11 @@ import com.zhuolang.starryserver.dao.PublicCommentDao;
 import com.zhuolang.starryserver.dao.PublishDao;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.PublicComment;
+import com.zhuolang.starryserver.entity.PublicCommentDto;
 import com.zhuolang.starryserver.service.PublicCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,8 +51,9 @@ public class PublicCommentServiceImpl implements PublicCommentService {
 
     @Override
     public ResultDto showAllComment(int pId) {
-      List<PublicComment> comments=publicCommentDao.showAllComment(pId);
-        if (comments != null & comments.size() > 0) {
+
+      List<PublicCommentDto> comments=publicCommentDao.showCommentIdList(pId);
+       if (comments != null & comments.size() > 0) {
             return new ResultDto(200, "success", comments);
         } else {
             return new ResultDto(200,"failure",null);

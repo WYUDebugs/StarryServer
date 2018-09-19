@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace为对应的dao类路径 -->
-<mapper namespace="com.zhuolang.starryserver.dao.PublicCommentDao">
+<mapper  namespace="com.zhuolang.starryserver.dao.PublicCommentDao">
 
     <!--添加评论-->
     <insert id="addComment" parameterType="com.zhuolang.starryserver.entity.PublicComment">
@@ -24,5 +24,45 @@
         FROM public_comment_tab
         WHERE public_id=#{pId}
     </select>
+
+    <select id="showCMansId">
+        SELECT commentator
+        FROM public_comment_tab
+        WHERE public_id=#{pId}
+    </select>
+
+    <resultMap id="commentResult" type="com.zhuolang.starryserver.entity.PublicCommentDto">
+        <id property="id" column="id"/>
+        <result property="commentator" column="commentator"/>
+        <result property="receiveId" column="receive_id"/>
+        <result property="publicId" column="public_id"/>
+        <result property="commentTime" column="comment_time"/>
+        <result property="commentContent" column="comment_content"/>
+        <!--一对一查询-->
+        <association property="cUser" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="commentator" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+
+        <association property="rUser" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="receive_id" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+
+    </resultMap>
+
+    <select id="showCommentIdList" resultType="com.zhuolang.starryserver.entity.PublicCommentDto" resultMap="commentResult">
+        SELECT P.*,U.phone,U.name,U.headimage
+        FROM  public_comment_tab P
+        LEFT OUTER JOIN user_tab U ON P.commentator=U.id
+        WHERE P.public_id=#{pId}
+        ORDER BY comment_time DESC ;
+    </select>
+
+
 
 </mapper>

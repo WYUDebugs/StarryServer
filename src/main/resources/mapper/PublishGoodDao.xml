@@ -28,6 +28,7 @@
         SELECT man_of_praise
         FROM public_good_tab
         WHERE publish_id=#{publishId}
+        ORDER BY time_of_praise DESC ;
     </select>
    <!-- 通过帖子id删除点赞信息,删除帖子时会用到-->
     <delete id="deleteByPublishId">
