@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhuolang.starryserver.dao.MomentDao">
+
+    <insert id="installMoment" useGeneratedKeys="true" keyProperty="moment.id" >
+        INSERT INTO moment_tab(sender,send_time,location_time,content)
+                VALUES (#{moment.sender},#{moment.send_time},#{mement.location_time},#{moment.content});
+    </insert>
+
+    <delete id="deleteByMomentId">
+        DELETE
+        FROM moment_tab
+        WHERE id=#{mId}
+    </delete>
+
+    <resultMap type="com.zhuolang.starryserver.entity.Moment" id="momentResult">
+        <id column="id" property="id"/>
+        <result column="sender" property="sender"/>
+        <result column="send_time" property="send_time"/>
+        <result column="location_time" property="location_time"/>
+        <result column="content" property="content"/>
+        <!--一对一查询-->
+        <association property="user" javaType="com.zhuolang.starryserver.entity.User">
+            <!-- id:声明主键，表示publisher是关联查询对象的唯一标识-->
+            <id property="id" column="sender" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+        <collection property="imageList" resultMap="ImageResult"/>
+    </resultMap>
+    <!--一对多查询-->
+    <resultMap type="com.zhuolang.starryserver.entity.MomentImage" id="ImageResult">
+        <result column="id" property="id"/>
+        <result column="moment_id" property="moment_id"/>
+        <result column="path" property="path"/>
+    </resultMap>
+
+
+    <select id="findMomentListByOwners" resultType="com.zhuolang.starryserver.entity.Moment" resultMap="momentResult">
+        SELECT M.*,I.*,U.phone,U.name,U.headimage
+        FROM moment_tab M
+        LEFT OUTER JOIN moment_image_tab I ON M.id=I.moment_id
+        LEFT OUTER JOIN user_tab U ON M.sender=U.id
+        <where>
+
+            <foreach collection="ids" item="item" open="M.sender IN (" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </where>
+        ORDER BY send_time DESC ;
+    </select>
+
+
+    <select id="findPublishListByUserId" resultType="com.zhuolang.starryserver.entity.PublishDto" resultMap="PublishResult">
+        SELECT P.*,I.*,U.phone,U.name,U.headimage
+        FROM public_tab P
+        LEFT OUTER JOIN public_image_tab I ON P.id=I.public_id
+        LEFT OUTER JOIN user_tab U ON P.publisher=U.id
+        WHERE P.publisher=#{userId}
+        ORDER BY time DESC ;
+    </select>
+</mapper>

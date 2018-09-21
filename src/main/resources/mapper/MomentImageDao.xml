@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhuolang.starryserver.dao.PublishImageDao">
+
+
+    <insert id="addMomentImage">
+        INSERT INTO moment_image_tab(moment_id,path)
+        VALUES (#{momentId},#{path});
+    </insert>
+
+
+    <delete id="deleteImageByMId">
+        DELETE
+        FROM moment_image_tab
+        WHERE moment_id=#{momentId}
+    </delete>
+
+
+    <select id="findImageByMId" parameterType="int" resultType="com.zhuolang.starryserver.entity.PublishImage">
+        SELECT  path
+        FROM moment_image_tab
+        WHERE moment_id=#{momentId}
+    </select>
+
