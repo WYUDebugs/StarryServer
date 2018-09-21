@@ -82,11 +82,13 @@ public class MomentController {
     public ResultDto momentList(HttpServletRequest request) {
         int bId = Integer.parseInt(request.getParameter("bId")); //获取点击的纪念册的id
         //业务层，通过纪念册id获取共同拥有者，再通过共同拥有者获取相关的纪念册片段列表
-        List<Moment> momentList = momentService.findMomentListByOwners(bId);
-        if (momentList!= null&&momentList.size()>0) {
+       List<Moment> momentList=momentService.findMomentListByOwners(bId);
+       if (momentList != null && momentList.size() > 0) {
             return new ResultDto(200, "success", momentList);
+        } else {
+            return new ResultDto(200,"noDate",null);
         }
-        return new ResultDto(200, "noDate");
+
     }
 
 

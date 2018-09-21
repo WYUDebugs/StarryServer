@@ -24,7 +24,6 @@
         <result column="content" property="content"/>
         <!--一对一查询-->
         <association property="user" javaType="com.zhuolang.starryserver.entity.User">
-            <!-- id:声明主键，表示publisher是关联查询对象的唯一标识-->
             <id property="id" column="sender" />
             <result property="phone" column="phone" />
             <result property="name" column="name" />

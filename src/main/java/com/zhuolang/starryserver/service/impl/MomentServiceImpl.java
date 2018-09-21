@@ -3,6 +3,7 @@ package com.zhuolang.starryserver.service.impl;
 import com.zhuolang.starryserver.dao.MemoryBookDao;
 import com.zhuolang.starryserver.dao.MomentDao;
 import com.zhuolang.starryserver.dao.MomentImageDao;
+import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Moment;
 import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.MomentService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,10 +55,11 @@ public class MomentServiceImpl implements MomentService{
 
     @Override
     public List<Moment> findMomentListByOwners(int bId) {
-        List<Integer> ownerList =memoryBookDao.findOwners(bId);
+         List<Integer> ownerList =memoryBookDao.findOwners(bId);
         if (ownerList != null && ownerList.size() > 0) {
             return momentDao.findMomentListByOwners(ownerList);
+        } else {
+            return null;
         }
-         return null;
     }
 }

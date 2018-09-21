@@ -71,7 +71,7 @@
 
     <!--查找纪念册的共同拥有者的id（纪念册创建者和成员）create by HMP-->
     <select id="findOwners" resultType="java.lang.Integer">
-        SELECT F.friend_id,B.owner
+        SELECT B.owner,F.friend_id
         FROM memory_book_tab B
         LEFT OUTER JOIN memory_friend_tab F ON B.id=F.memory_book_id
         WHERE B.id=#{bId}

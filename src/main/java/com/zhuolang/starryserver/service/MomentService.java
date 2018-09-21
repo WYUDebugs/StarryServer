@@ -8,4 +8,5 @@ public interface MomentService {
     int sendMoment(Moment moment,List<String> imageList);
     int sendMomentNoImage(Moment moment);
     List<Moment> findMomentListByOwners(int bId);
+
 }
