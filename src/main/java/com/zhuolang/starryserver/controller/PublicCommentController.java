@@ -63,7 +63,7 @@ public class PublicCommentController {
     @RequestMapping(value = "/show")
     public ResultDto showAllComment( HttpServletRequest request) {
 
-        int pId=Integer.parseInt(request.getParameter("pId")); //获取帖子的所有评论
+        int pId=Integer.parseInt(request.getParameter("pId")); //获取帖子的id
         ResultDto resultDto=publicCommentService.showAllComment(pId);
         return resultDto;
     }

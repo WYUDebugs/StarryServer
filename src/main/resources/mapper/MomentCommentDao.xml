@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhuolang.starryserver.dao.MomentCommentDao">
+
+   <!-- 发表评论-->
+    <insert id="addMomentComment" useGeneratedKeys="true" keyProperty="mComment.id">
+        INSERT INTO moment_comment_tab(commentator,moment_id,comment_time,comment_content)
+        VALUES (#{mComment.commentator},#{mComment.momentId},#{mComment.commentTime},#{mComment.commentContent});
+    </insert>
+
+    <resultMap id="mCommentResult" type="com.zhuolang.starryserver.entity.MomentComment">
+        <id property="id" column="id"/>
+        <result property="commentator" column="commentator"/>
+        <result property="momentId" column="moment_id"/>
+        <result property="commentTime" column="comment_time"/>
+        <result property="commentContent" column="comment_content"/>
+
+        <association property="user" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="commentator"/>
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+
+    </resultMap>
+    <!--通过片段的id获取改片段的所有评论-->
+    <select id="showComments" resultMap="mCommentResult" resultType="com.zhuolang.starryserver.entity.MomentComment">
+        SELECT M.*,U.phone,U.name,U.headimage
+        FROM moment_comment_tab M
+        LEFT OUTER JOIN user_tab U ON  M.commentator=U.id
+        WHERE U.moment_id=#{mId}
+        ORDER BY comment_time DESC;
+    </select>
+
+</mapper>

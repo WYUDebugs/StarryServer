@@ -55,13 +55,4 @@
         ORDER BY send_time DESC ;
     </select>
 
-
-    <select id="findPublishListByUserId" resultType="com.zhuolang.starryserver.entity.PublishDto" resultMap="PublishResult">
-        SELECT P.*,I.*,U.phone,U.name,U.headimage
-        FROM public_tab P
-        LEFT OUTER JOIN public_image_tab I ON P.id=I.public_id
-        LEFT OUTER JOIN user_tab U ON P.publisher=U.id
-        WHERE P.publisher=#{userId}
-        ORDER BY time DESC ;
-    </select>
 </mapper>
