@@ -29,7 +29,7 @@ public class MomentCommentController {
         mComment.setMomentId(mId);
         mComment.setCommentTime(TimeUtil.dateToString(new Date()));
         mComment.setCommentContent(request.getParameter("cContent")); //获取评论的内容
-        ResultDto resultDto=momentCommentService.addmCommen(mComment);
+        ResultDto resultDto=momentCommentService.addmComment(mComment);
         return resultDto;
     }
     @ResponseBody//将返回的数据处理为json

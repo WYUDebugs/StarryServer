@@ -1,12 +1,12 @@
 package com.zhuolang.starryserver.entity;
 
-public class MomentComment {
+public class MomentComment{
     private int id;
     private int commentator;
+    private User user;
     private int momentId;
     private String commentTime;
     private String commentContent;
-    private User user;
 
     public User getUser() {
         return user;

@@ -31,7 +31,7 @@
         SELECT M.*,U.phone,U.name,U.headimage
         FROM moment_comment_tab M
         LEFT OUTER JOIN user_tab U ON  M.commentator=U.id
-        WHERE U.moment_id=#{mId}
+        WHERE M.moment_id=#{mId}
         ORDER BY comment_time DESC;
     </select>
 

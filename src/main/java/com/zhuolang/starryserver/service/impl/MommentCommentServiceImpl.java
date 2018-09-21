@@ -15,7 +15,7 @@ public class MommentCommentServiceImpl implements MomentCommentService {
     private MomentCommentDao momentCommentDao;
 
     @Override
-    public ResultDto addmCommen(MomentComment mComment) {
+    public ResultDto addmComment(MomentComment mComment) {
         int result=momentCommentDao.addMomentComment(mComment);
         if (result == 1) {
           return  new ResultDto(200, "success");
