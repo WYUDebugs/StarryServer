@@ -7,7 +7,7 @@
 
     <!--添加评论-->
     <insert id="addComment" parameterType="com.zhuolang.starryserver.entity.PublicComment">
-        INSERT ignore INTO public_comment_tab(commentator,receive_id,public_id,comment_time,comment_content)
+        INSERT ignore INTO public_comment_tab(commentator,receiver_id,public_id,comment_time,comment_content)
         VALUES (#{comment.commentator},#{comment.receiveId},#{comment.publicId},#{comment.commentTime},#{comment.commentContent})
     </insert>
 

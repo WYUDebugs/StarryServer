@@ -93,6 +93,8 @@
             <result property="headimage" column="headimage" />
         </association>
         <collection property="imageList" resultMap="ImageResult"/>
+        <collection property="commentDtos" resultMap="commentResult"/>
+        <collection property="goods" resultMap="praiseResult"/>
     </resultMap>
     <!--一对多查询-->
     <resultMap type="com.zhuolang.starryserver.entity.PublishImage" id="ImageResult">
@@ -101,12 +103,50 @@
         <result column="path" property="path"/>
     </resultMap>
 
+    <resultMap id="praiseResult" type="com.zhuolang.starryserver.entity.publishGoodDto">
+        <result column="id" property="id"/>
+        <result property="publishId" column="publish_id"/>
+        <result property="manOfPraise" column="man_of_praise"/>
+        <result property="timeOfPraise" column="time_of_praise"/>
+        <!--一对一查询-->
+        <association property="user" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="commentator" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+    </resultMap>
+
+    <resultMap id="commentResult" type="com.zhuolang.starryserver.entity.PublicCommentDto">
+        <result column="id" property="id"/>
+        <result property="commentator" column="commentator"/>
+        <result property="receiveId" column="receive_id"/>
+        <result property="publicId" column="public_id"/>
+        <result property="commentTime" column="comment_time"/>
+        <result property="commentContent" column="comment_content"/>
+        <!--一对一查询-->
+        <association property="cUser" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="commentator" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+
+        <association property="rUser" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="receive_id" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+    </resultMap>
     <!--通过用户id列表查找他的所有帖子信息，包括用户信息、帖子图片-->
     <select id="findPublishListByUserIdList" resultType="com.zhuolang.starryserver.entity.PublishDto" resultMap="PublishResult">
-        SELECT P.*,I.*,U.phone,U.name,U.headimage
+        SELECT P.*,I.*,U.phone,U.name,U.headimage,T.*
         FROM public_tab P
         LEFT OUTER JOIN public_image_tab I ON P.id=I.public_id
         LEFT OUTER JOIN user_tab U ON P.publisher=U.id
+        LEFT OUTER JOIN public_comment_tab T ON P.id=T.public_id
+        LEFT OUTER JOIN public_good_tab G ON P.id=G.publish_id
         <where>
             <!-- foreach标签，进行遍历 -->
             <!-- collection：遍历的集合，这里是QueryVo的ids属性 -->

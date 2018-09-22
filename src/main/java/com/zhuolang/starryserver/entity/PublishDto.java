@@ -17,6 +17,24 @@ public class PublishDto {
     private int type;  //动态的类型，默认为0为发布的动态，1为分享过来的动态
     private List<PublishImage> imageList;
     private User user;
+    private List<PublicCommentDto> commentDtos;
+    private List<PublishGood> goods;
+
+    public List<PublishGood> getGoods() {
+        return goods;
+    }
+
+    public void setGoods(List<PublishGood> goods) {
+        this.goods = goods;
+    }
+
+    public List<PublicCommentDto> getCommentDtos() {
+        return commentDtos;
+    }
+
+    public void setCommentDtos(List<PublicCommentDto> commentDtos) {
+        this.commentDtos = commentDtos;
+    }
 
     public int getId() {
         return id;
