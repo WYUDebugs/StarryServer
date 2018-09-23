@@ -1,6 +1,6 @@
 package com.zhuolang.starryserver.entity;
 
-public class publishGoodDto {
+public class PublishGoodDto {
     private int id;
     private int publishId;
     private int manOfPraise;
@@ -45,5 +45,16 @@ public class publishGoodDto {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "PublishGoodDto{" +
+                "id=" + id +
+                ", publishId=" + publishId +
+                ", manOfPraise=" + manOfPraise +
+                ", timeOfPraise='" + timeOfPraise + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

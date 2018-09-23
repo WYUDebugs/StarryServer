@@ -42,4 +42,14 @@ public class PublishGood {
     public void setTimeOfPraise(Date timeOfPraise) {
         this.timeOfPraise = timeOfPraise;
     }
+
+    @Override
+    public String toString() {
+        return "PublishGood{" +
+                "id=" + id +
+                ", publishId=" + publishId +
+                ", manOfPraise=" + manOfPraise +
+                ", timeOfPraise=" + timeOfPraise +
+                '}';
+    }
 }

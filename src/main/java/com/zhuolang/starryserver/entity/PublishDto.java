@@ -18,13 +18,14 @@ public class PublishDto {
     private List<PublishImage> imageList;
     private User user;
     private List<PublicCommentDto> commentDtos;
-    private List<PublishGood> goods;
+    private List<PublishGoodDto> goods;
 
-    public List<PublishGood> getGoods() {
+
+    public List<PublishGoodDto> getGoods() {
         return goods;
     }
 
-    public void setGoods(List<PublishGood> goods) {
+    public void setGoods(List<PublishGoodDto> goods) {
         this.goods = goods;
     }
 
@@ -134,7 +135,7 @@ public class PublishDto {
 
     @Override
     public String toString() {
-        return "Publish{" +
+        return "PublishDto{" +
                 "id=" + id +
                 ", publisher=" + publisher +
                 ", time=" + time +
@@ -147,6 +148,8 @@ public class PublishDto {
                 ", type=" + type +
                 ", imageList=" + imageList +
                 ", user=" + user +
+                ", commentDtos=" + commentDtos +
+                ", goods=" + goods +
                 '}';
     }
 }

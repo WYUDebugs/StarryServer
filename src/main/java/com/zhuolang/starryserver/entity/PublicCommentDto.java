@@ -76,4 +76,18 @@ public class PublicCommentDto {
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
     }
+
+    @Override
+    public String toString() {
+        return "PublicCommentDto{" +
+                "id=" + id +
+                ", commentator=" + commentator +
+                ", cUser=" + cUser +
+                ", receiveId=" + receiveId +
+                ", rUser=" + rUser +
+                ", publicId=" + publicId +
+                ", commentTime='" + commentTime + '\'' +
+                ", commentContent='" + commentContent + '\'' +
+                '}';
+    }
 }
