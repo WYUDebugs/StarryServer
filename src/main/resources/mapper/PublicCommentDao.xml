@@ -15,7 +15,7 @@
     <delete id="deleteComment">
         DELETE
         FROM public_comment_tab
-        WHERE id=#{id}
+        WHERE cm_id=#{id}
     </delete>
 
     <!--显示帖子的所有评论-->
@@ -32,7 +32,7 @@
     </select>
 
     <resultMap id="commentResult" type="com.zhuolang.starryserver.entity.PublicCommentDto">
-        <id property="id" column="id"/>
+        <id property="cmId" column="cm_id"/>
         <result property="commentator" column="commentator"/>
         <result property="receiveId" column="receive_id"/>
         <result property="publicId" column="public_id"/>

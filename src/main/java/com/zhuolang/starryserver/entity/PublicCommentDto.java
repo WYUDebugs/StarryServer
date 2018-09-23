@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class PublicCommentDto {
 
-    private int id;
+    private int cmId;
     private int commentator;
     private User cUser;
     private int receiveId;
@@ -13,12 +13,12 @@ public class PublicCommentDto {
     private String  commentTime;
     private String commentContent;
 
-    public int getId() {
-        return id;
+    public int getCmId() {
+        return cmId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCmId(int cmId) {
+        this.cmId = cmId;
     }
 
     public int getCommentator() {
@@ -80,7 +80,7 @@ public class PublicCommentDto {
     @Override
     public String toString() {
         return "PublicCommentDto{" +
-                "id=" + id +
+                "cmId=" + cmId +
                 ", commentator=" + commentator +
                 ", cUser=" + cUser +
                 ", receiveId=" + receiveId +

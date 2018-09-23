@@ -21,7 +21,7 @@
     <delete id="deleteById">
         DELETE
         FROM public_good_tab
-        WHERE id=#{id}
+        WHERE gd_id=#{id}
     </delete>
     <!--通过帖子id获取所有点赞人的id-->
     <select id="findMansIdByPublishId" resultType="java.lang.Integer">

@@ -57,7 +57,7 @@ public class PublishGoodServiceImpl implements PublishGoodService {
             //当已经点赞过
             PublishGood publishGood = publishGoods.get(0);
             //通过点赞id删除点赞的信息,也就是客户端的取消赞功能
-            goodDao.deleteById(publishGood.getId());
+            goodDao.deleteById(publishGood.getGdId());
             //更新帖子表，点赞数-1
             int result=publishDao.updatePublishById(praiseNum-1,pId);
             if (result == 1) {

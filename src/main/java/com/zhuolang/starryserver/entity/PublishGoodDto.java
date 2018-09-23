@@ -1,18 +1,18 @@
 package com.zhuolang.starryserver.entity;
 
 public class PublishGoodDto {
-    private int id;
+    private int gdId;
     private int publishId;
     private int manOfPraise;
     private String timeOfPraise;
     private User user;
 
-    public int getId() {
-        return id;
+    public int getGdId() {
+        return gdId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setGdId(int gdId) {
+        this.gdId = gdId;
     }
 
     public int getPublishId() {
@@ -50,7 +50,7 @@ public class PublishGoodDto {
     @Override
     public String toString() {
         return "PublishGoodDto{" +
-                "id=" + id +
+                "gdId=" + gdId +
                 ", publishId=" + publishId +
                 ", manOfPraise=" + manOfPraise +
                 ", timeOfPraise='" + timeOfPraise + '\'' +

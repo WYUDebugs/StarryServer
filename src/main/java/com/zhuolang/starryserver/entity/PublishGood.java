@@ -6,17 +6,17 @@ import java.util.Date;
  * Created by HuangMingPan on 2018/9/03.
  */
 public class PublishGood {
-    private int id;
+    private int gdId;
     private int publishId;
     private int manOfPraise;
     private Date timeOfPraise;
 
-    public int getId() {
-        return id;
+    public int getGdId() {
+        return gdId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setGdId(int gdId) {
+        this.gdId = gdId;
     }
 
     public int getPublishId() {
@@ -46,7 +46,7 @@ public class PublishGood {
     @Override
     public String toString() {
         return "PublishGood{" +
-                "id=" + id +
+                "gdId=" + gdId +
                 ", publishId=" + publishId +
                 ", manOfPraise=" + manOfPraise +
                 ", timeOfPraise=" + timeOfPraise +
