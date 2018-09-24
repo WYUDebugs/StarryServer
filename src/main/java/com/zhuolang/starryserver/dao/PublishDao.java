@@ -94,9 +94,9 @@ public interface PublishDao {
 
     /**
      * 通过帖子id更新评论数
-     * @param cNum
      * @param id
      * @return
      */
-    int updateCommentNum(@Param("cNum")int cNum,@Param("id")int id);
+    int updateCommentNum(@Param("id")int id);
+    int updateCommentNum2(@Param("id")int id);
 }

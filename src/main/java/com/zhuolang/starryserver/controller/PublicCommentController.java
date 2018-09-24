@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.controller;
 
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.PublicComment;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.PublicCommentService;
 import com.zhuolang.starryserver.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,21 @@ public class PublicCommentController {
         comment.setPublicId(pId);
         String cContent=request.getParameter("cContent"); //获取评论的内容
         comment.setCommentContent(cContent);
-        ResultDto resultDto=publicCommentService.addComment(comment);
-        return resultDto;
-
+        int result=0;
+        try {
+            result=publicCommentService.addComment(pId,comment);
+        }catch (MyThrowException e) {
+            System.out.println("异常捕捉：MyThrowException：" + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("异常捕捉：Exception：" + e.getMessage());
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            return new ResultDto(200, "success", null);
+        } else {
+            return new ResultDto(200,"failure",null);
+        }
     }
 
     /**
@@ -55,8 +68,22 @@ public class PublicCommentController {
     public ResultDto deleteComment( HttpServletRequest request) {
 
         int id=Integer.parseInt(request.getParameter("id"));//获取评论的id
-        ResultDto resultDto=publicCommentService.deleteComment(id);
-        return resultDto;
+        int pId=Integer.parseInt(request.getParameter("pId")); //获取帖子id，用以更新帖子评论数
+        int result=0;
+        try {
+            result=publicCommentService.deleteComment(pId,id);
+        }catch (MyThrowException e) {
+            System.out.println("异常捕捉：MyThrowException：" + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("异常捕捉：Exception：" + e.getMessage());
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            return new ResultDto(200, "delete_success", null);
+        } else {
+            return new ResultDto(200,"delete_failure",null);
+        }
     }
 
     @ResponseBody//将返回的数据处理为json

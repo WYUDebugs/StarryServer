@@ -5,7 +5,7 @@ import com.zhuolang.starryserver.entity.PublicComment;
 
 
 public interface PublicCommentService {
-    ResultDto addComment(PublicComment comment);
-    ResultDto deleteComment(int id);
+    int addComment(int pId,PublicComment comment);
+    int deleteComment(int pId,int id);
     ResultDto showAllComment(int pId);
 }

@@ -58,10 +58,16 @@
         WHERE id=#{id}
     </update>
 
-    <!--通过帖子id更新帖子的评论数数-->
+    <!--通过帖子id更新帖子的评论数,添加评论，评论数+1-->
     <update id="updateCommentNum" >
         UPDATE public_tab
-        SET  number_of_comments=#{cNum}
+        SET  number_of_comments=number_of_comments+1
+        WHERE id=#{id}
+    </update>
+    <!--通过帖子id更新帖子的评论数,删除评论，评论数-1-->
+    <update id="updateCommentNum2" >
+        UPDATE public_tab
+        SET  number_of_comments=number_of_comments-1
         WHERE id=#{id}
     </update>
 
