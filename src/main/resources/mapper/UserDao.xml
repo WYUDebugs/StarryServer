@@ -69,28 +69,28 @@
     <update id="changeUserById" parameterType="com.zhuolang.starryserver.entity.User">
         update user_tab
         <set>
-            <if test="user.password != null and user.password!=''">
+            <if test="user.password != null">
                 password =#{user.password},
             </if>
-            <if test="user.name != null and user.name!=''">
+            <if test="user.name != null">
                 name =#{user.name},
             </if>
-            <if test="user.gender != null and user.gender!=''">
-               gender =#{user.gender},
+            <if test="user.gender!=null and user.gender!=''">
+                gender =#{user.gender},
             </if>
-            <if test="user.age != null and user.age!=''">
+            <if test="user.age != null ">
                 age =#{user.age},
             </if>
-            <if test="user.birthday != null and user.birthday!=''">
+            <if test="user.birthday != null">
                 birthday =#{user.birthday},
             </if>
-            <if test="user.address != null and user.address!=''">
+            <if test="user.address != null">
                 address =#{user.address},
             </if>
-            <if test="user.typelabel != null and user.typelabel!=''">
+            <if test="user.typelabel != null">
                 typelabel =#{user.typelabel},
             </if>
-            <if test="user.signature != null and user.signature!=''">
+            <if test="user.signature != null">
                 signature =#{user.signature},
             </if>
         </set>

@@ -251,7 +251,10 @@ public class UserController extends BaseExceptionHandleAction {
             user.setName(request.getParameter("name"));
         }
         if (request.getParameter("gender")!=null){
-            user.setGender(Integer.parseInt(request.getParameter("gender")));
+            String sexId=request.getParameter("gender");
+            if (sexId.equals("0")||sexId.equals("1")) {
+                user.setGender(Integer.parseInt(request.getParameter("gender")));
+            }
         }
         if (request.getParameter("age")!=null) {
             user.setAge(Integer.parseInt(request.getParameter("age")));
