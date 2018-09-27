@@ -117,4 +117,14 @@ public class MemoryBookServiceImpl implements MemoryBookService {
     public MemoryBook findMemoryBookById(int id) {
         return memoryBookDao.findMemoryBookById(id);
     }
+
+    @Override
+    public List<MemoryBook> showBookList(int uId) {
+        List<MemoryBook> books=memoryBookDao.memoryBookListResult(uId);
+        if (books != null && books.size() > 0) {
+            return books;
+        } else {
+            return null;
+        }
+    }
 }

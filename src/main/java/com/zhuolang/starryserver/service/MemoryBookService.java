@@ -80,4 +80,6 @@ public interface MemoryBookService {
      * @return
      */
     MemoryBook findMemoryBookById(int id);
+
+    List<MemoryBook> showBookList(int uId);
 }

@@ -182,7 +182,14 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
     @ResponseBody//将返回数据处理为json
     @RequestMapping(value = "/findMemoryListByUserId")
     public ResultDto findMemoryListByUserId(HttpServletRequest request){
-        return null;
+        int uId=Integer.parseInt(request.getParameter("uId"));
+        List<MemoryBook> bookList=memoryBookService.showBookList(uId);
+        if (bookList != null && bookList.size() > 0) {
+            return new ResultDto(200, "success", bookList);
+        } else {
+            return new ResultDto(200,"noDate",null);
+        }
+
     }
 
     /**

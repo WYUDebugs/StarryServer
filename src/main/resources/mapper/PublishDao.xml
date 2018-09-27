@@ -121,14 +121,14 @@
     <resultMap id="commentResult" type="com.zhuolang.starryserver.entity.PublicCommentDto">
         <id     column="cm_id" property="cmId"/>
         <result property="commentator" column="commentator"/>
-        <result property="receiveId" column="receive_id"/>
+        <result property="receiveId" column="receiver_id"/>
         <result property="commentTime" column="comment_time"/>
         <result property="commentContent" column="comment_content"/>
 
         <association property="cUser" javaType="com.zhuolang.starryserver.entity.User"
         column="commentator" select="findManOfComment">
         </association>
-        <association property="rUser" javaType="com.zhuolang.starryserver.entity.User" column="receive_id" select="findManOfReceive">
+        <association property="rUser" javaType="com.zhuolang.starryserver.entity.User" column="receiver_id" select="findManOfReceive">
         </association>
     </resultMap>
     <select id="findManOfPraise" resultType="com.zhuolang.starryserver.entity.User">
