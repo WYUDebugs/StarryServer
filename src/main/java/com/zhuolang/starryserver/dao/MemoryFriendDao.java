@@ -34,4 +34,6 @@ public interface MemoryFriendDao {
      */
     List<MemoryFriend> findMemoryFriend(@Param("memory_book_id")int memory_book_id);
 
+    MemoryFriend checkFriend(@Param("fId")int fId,@Param("bId")int bId);
+
 }

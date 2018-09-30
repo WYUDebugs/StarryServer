@@ -25,5 +25,12 @@
         order by id ASC
     </select>
 
+    <!--查询纪念册是后有该成员，防止添加重复-->
+    <select id="checkFriend" resultType="com.zhuolang.starryserver.entity.MemoryFriend">
+        SELECT *
+        FROM memory_friend_tab
+        WHERE friend_id=#{fId} AND memory_book_id=#{bId}
+    </select>
+
 
 </mapper>
