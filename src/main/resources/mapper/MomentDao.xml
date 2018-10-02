@@ -7,7 +7,7 @@
 
     <insert id="installMoment" useGeneratedKeys="true" keyProperty="moment.id" >
         INSERT INTO moment_tab(sender,send_time,location_time,content)
-                VALUES (#{moment.sender},#{moment.send_time},#{mement.location_time},#{moment.content});
+                VALUES (#{moment.sender},#{moment.send_time},#{moment.location_time},#{moment.content});
     </insert>
 
     <delete id="deleteByMomentId">

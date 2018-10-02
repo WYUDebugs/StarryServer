@@ -38,9 +38,7 @@ public class MomentController {
         Moment moment=new Moment();
         moment.setSender(parseInt(request.getParameter("sender"))); //发布片段者的id
         moment.setContent(request.getParameter("content"));           //发布片段的文字内容
-        if (request.getParameter("locationTime")!=null) {
-            moment.setLocation_time(request.getParameter("locationTime")); //时间轴的时间
-        }
+        moment.setLocation_time(request.getParameter("locationTime")); //时间轴的时间
         moment.setSend_time(TimeUtil.dateToString(new Date())); //发布片段的时间
         int result = 0;
         if (file.length > 0) {
