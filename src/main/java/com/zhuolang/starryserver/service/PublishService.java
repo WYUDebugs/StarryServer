@@ -43,4 +43,6 @@ public interface PublishService {
      */
     List<Publish> showSomeonePublish(int publisher);
 
+    int publishNum(int uId);
+
 }

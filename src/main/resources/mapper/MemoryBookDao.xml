@@ -84,4 +84,17 @@
         WHERE B.owner=#{uId} OR F.friend_id=#{uId}
         ORDER BY creat_time DESC
     </select>
+
+    <select id="showBookNum1" resultType="int">
+        SELECT COUNT(*)
+        FROM memory_book_tab
+        WHERE owner=#{uId}
+    </select>
+
+    <select id="showBookNum2" resultType="int">
+        SELECT COUNT(*)
+        FROM memory_friend_tab
+        WHERE friend_id=#{uId}
+    </select>
+
 </mapper>

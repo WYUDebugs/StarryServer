@@ -163,4 +163,17 @@ public class PublishController extends BaseExceptionHandleAction {
         ResultDto resultDto = publishService.deletePublisher(id);
         return resultDto;
     }
+
+    /**
+     * 个人帖子的数量
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/publishNum")
+    public ResultDto publisherNum(HttpServletRequest request) {
+        int uId = Integer.parseInt(request.getParameter("uId"));
+        int numResult= publishService.publishNum(uId);
+        return new ResultDto(200,"success",numResult);
+    }
 }

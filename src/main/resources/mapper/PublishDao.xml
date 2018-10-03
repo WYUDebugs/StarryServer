@@ -78,6 +78,12 @@
         WHERE id=#{id}
     </update>
 
+    <select id="publishNum" resultType="int">
+        SELECT COUNT(*)
+        FROM public_tab
+        WHERE publisher=#{uId}
+    </select>
+
 
     <resultMap type="com.zhuolang.starryserver.entity.PublishDto" id="PublishResult">
         <id column="id" property="id"/>

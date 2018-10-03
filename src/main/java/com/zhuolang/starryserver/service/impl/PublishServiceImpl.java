@@ -153,5 +153,10 @@ public class PublishServiceImpl implements PublishService {
         return publishDao.showPostDESC(publisher);
     }
 
+    @Override
+    public int publishNum(int uId) {
+        return publishDao.publishNum(uId);
+    }
+
 
 }

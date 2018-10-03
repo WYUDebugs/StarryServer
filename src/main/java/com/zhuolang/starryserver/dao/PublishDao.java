@@ -99,4 +99,5 @@ public interface PublishDao {
      */
     int updateCommentNum(@Param("id")int id);
     int updateCommentNum2(@Param("id")int id);
+    int publishNum(@Param("uId")int uId);
 }

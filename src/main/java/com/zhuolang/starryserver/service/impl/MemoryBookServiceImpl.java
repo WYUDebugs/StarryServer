@@ -127,4 +127,11 @@ public class MemoryBookServiceImpl implements MemoryBookService {
             return null;
         }
     }
+
+    @Override
+    public int showBookNum(int uId) {
+        int result1=memoryBookDao.showBookNum1(uId);
+        int result2=memoryBookDao.showBookNum2(uId);
+        return result1+result2;
+    }
 }

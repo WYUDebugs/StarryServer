@@ -88,4 +88,7 @@ public interface MemoryBookDao {//添加Dao的test时，选中类名，右键go 
     List<Integer> findOwners(@Param("bId")int bId);
 
     List<MemoryBook> memoryBookListResult(@Param("uId")int uId);
+
+    int showBookNum1(@Param("uId")int uId);
+    int showBookNum2(@Param("uId")int uId);
 }

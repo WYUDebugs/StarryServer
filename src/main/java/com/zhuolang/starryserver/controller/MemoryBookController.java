@@ -273,6 +273,19 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
         }
     }
 
+    /**
+     * 个人相册的数量
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/bookNum")
+    public ResultDto publisherNum(HttpServletRequest request) {
+        int uId = Integer.parseInt(request.getParameter("uId"));
+        int numResult= memoryBookService.showBookNum(uId);
+        return new ResultDto(200,"success",numResult);
+    }
+
 
 
 }
