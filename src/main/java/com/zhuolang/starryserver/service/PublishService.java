@@ -41,7 +41,7 @@ public interface PublishService {
      * @param publisher
      * @return
      */
-    List<Publish> showSomeonePublish(int publisher);
+    List<PublishDto> showSomeonePublish(int publisher);
 
     int publishNum(int uId);
 

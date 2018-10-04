@@ -149,8 +149,8 @@ public class PublishServiceImpl implements PublishService {
      * @return
      */
     @Override
-    public List<Publish> showSomeonePublish(int publisher) {
-        return publishDao.showPostDESC(publisher);
+    public List<PublishDto> showSomeonePublish(int publisher) {
+        return publishDao.findPublishListByUserId(publisher);
     }
 
     @Override

@@ -142,7 +142,7 @@ public class PublishController extends BaseExceptionHandleAction {
     @RequestMapping(value = "/showSomeonePost")
     public ResultDto showSomeonePost(HttpServletRequest request) {
         int publisher=Integer.parseInt(request.getParameter("publisher"));
-        List<Publish> publishList=publishService.showSomeonePublish(publisher);
+        List<PublishDto> publishList=publishService.showSomeonePublish(publisher);
         if (publishList != null && publishList.size() > 0) {
             return new ResultDto(200, "success", publishList);
         } else {
