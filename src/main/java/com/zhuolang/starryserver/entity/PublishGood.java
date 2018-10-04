@@ -10,6 +10,7 @@ public class PublishGood {
     private int publishId;
     private int manOfPraise;
     private Date timeOfPraise;
+    private int state;
 
     public int getGdId() {
         return gdId;
@@ -43,6 +44,14 @@ public class PublishGood {
         this.timeOfPraise = timeOfPraise;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "PublishGood{" +
@@ -50,6 +59,7 @@ public class PublishGood {
                 ", publishId=" + publishId +
                 ", manOfPraise=" + manOfPraise +
                 ", timeOfPraise=" + timeOfPraise +
+                ", state=" + state +
                 '}';
     }
 }

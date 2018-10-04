@@ -1,6 +1,7 @@
 package com.zhuolang.starryserver.dao;
 
 import com.zhuolang.starryserver.entity.PublishGood;
+import com.zhuolang.starryserver.entity.PublishGoodDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -49,4 +50,8 @@ public interface PublishGoodDao {
      * @return
      */
     int deleteByPublishId(@Param("publishId")int publishId);
+
+    int updatePraiseState(@Param("gdIds")List<Integer> gdIds);
+
+     List<PublishGoodDto> showUnReadPraise(@Param("uId")int uId,@Param("pIds")List<Integer> pIds);
 }

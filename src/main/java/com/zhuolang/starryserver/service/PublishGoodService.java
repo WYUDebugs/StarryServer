@@ -11,4 +11,6 @@ import java.util.List;
 public interface PublishGoodService {
     List<User> showPraise(int pId);
     ResultDto praise(int pId, int uId);
+    ResultDto updatePraiseState(List<Integer> gdIds);
+    ResultDto showUnReadPraise(int uId);
 }

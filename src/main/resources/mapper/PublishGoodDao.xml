@@ -37,4 +37,39 @@
         WHERE publish_id=#{publishId}
     </delete>
 
+    <update id="updatePraiseState">
+        UPDATE public_good_tab
+        SET state=1
+        <where>
+            <foreach collection="gdIds" item="item" open="gd_id IN (" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <resultMap id="praiseResult" type="com.zhuolang.starryserver.entity.PublishGoodDto">
+        <id property="gdId" column="gd_id"/>
+        <result property="manOfPraise" column="man_of_praise"/>
+        <result property="timeOfPraise" column="time_of_praise"/>
+        <result property="publishId" column="publish_id"/>
+        <result property="state" column="state"/>
+        <association property="user" javaType="com.zhuolang.starryserver.entity.User">
+            <id property="id" column="man_of_praise" />
+            <result property="phone" column="phone" />
+            <result property="name" column="name" />
+            <result property="headimage" column="headimage" />
+        </association>
+    </resultMap>
+
+    <select id="showUnReadPraise"  resultMap="praiseResult">
+        SELECT G.*,U.phone,U.name,U.headimage
+        FROM  public_good_tab G
+        LEFT OUTER JOIN user_tab U ON G.man_of_praise=U.id
+        where   G.state=0 and man_of_praise!=#{uId} and G.publish_id in
+        <foreach collection="pIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

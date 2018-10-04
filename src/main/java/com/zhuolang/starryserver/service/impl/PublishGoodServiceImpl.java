@@ -6,6 +6,7 @@ import com.zhuolang.starryserver.dao.UserDao;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.PublishGood;
 import com.zhuolang.starryserver.entity.Publish;
+import com.zhuolang.starryserver.entity.PublishGoodDto;
 import com.zhuolang.starryserver.entity.User;
 import com.zhuolang.starryserver.service.PublishGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,33 @@ public class PublishGoodServiceImpl implements PublishGoodService {
             } else {
                 return new ResultDto(200, "failure", null);
             }
+        }
+
+    }
+
+    /**
+     * 将未读点赞信息标记为已读
+     * @param gdIds
+     * @return
+     */
+    @Override
+    public ResultDto updatePraiseState(List<Integer> gdIds) {
+        int result=goodDao.updatePraiseState(gdIds);
+        if (result > 0) {
+            return new ResultDto(200, "success", null);
+        } else {
+            return new ResultDto(200,"failure",null);
+        }
+    }
+
+    @Override
+    public ResultDto showUnReadPraise(int uId) {
+        List<Integer> pIds=publishDao.getPublishId(uId);
+        List<PublishGoodDto> unReadPraise=goodDao.showUnReadPraise(uId,pIds);
+        if (unReadPraise != null && unReadPraise.size() > 0) {
+            return new ResultDto(200, "success", unReadPraise);
+        } else {
+            return new ResultDto(20,"没有新的点赞",null);
         }
 
     }

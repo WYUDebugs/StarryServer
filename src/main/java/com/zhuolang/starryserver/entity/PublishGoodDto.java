@@ -6,6 +6,7 @@ public class PublishGoodDto {
     private int manOfPraise;
     private String timeOfPraise;
     private User user;
+    private int state;
 
     public int getGdId() {
         return gdId;
@@ -47,6 +48,14 @@ public class PublishGoodDto {
         this.user = user;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "PublishGoodDto{" +
@@ -55,6 +64,7 @@ public class PublishGoodDto {
                 ", manOfPraise=" + manOfPraise +
                 ", timeOfPraise='" + timeOfPraise + '\'' +
                 ", user=" + user +
+                ", state=" + state +
                 '}';
     }
 }
