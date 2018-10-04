@@ -84,6 +84,11 @@
         WHERE publisher=#{uId}
     </select>
 
+    <select id="getPublishId" resultType="Integer">
+        SELECT id
+        FROM public_tab
+        WHERE publisher=#{uId}
+    </select>
 
     <resultMap type="com.zhuolang.starryserver.entity.PublishDto" id="PublishResult">
         <id column="id" property="id"/>
@@ -130,7 +135,7 @@
         <result property="receiveId" column="receiver_id"/>
         <result property="commentTime" column="comment_time"/>
         <result property="commentContent" column="comment_content"/>
-
+        <result property="state" column="state"/>
         <association property="cUser" javaType="com.zhuolang.starryserver.entity.User"
         column="commentator" select="findManOfComment">
         </association>

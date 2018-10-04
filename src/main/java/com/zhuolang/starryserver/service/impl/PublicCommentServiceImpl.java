@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -65,6 +66,31 @@ public class PublicCommentServiceImpl implements PublicCommentService {
       List<PublicCommentDto> comments=publicCommentDao.showCommentIdList(pId);
        if (comments != null & comments.size() > 0) {
             return new ResultDto(200, "success", comments);
+        } else {
+            return new ResultDto(200,"failure",null);
+        }
+    }
+
+    @Override
+    public ResultDto updateCommentState(List<Integer> cmIds) {
+        int result=publicCommentDao.updateCommentState(cmIds);
+        if (result > 0) {
+            return new ResultDto(200, "success", null);
+        } else {
+            return new ResultDto(200,"failure",null);
+        }
+    }
+
+    @Override
+    public ResultDto showUnReadComment(int uId) {
+        List<Integer> pIds=publishDao.getPublishId(uId);
+        List<PublicCommentDto> unReadComment1=publicCommentDao.showUnReadComment(uId,pIds);
+        List<PublicCommentDto> unReadComment2=publicCommentDao.showUnReadComment2(uId,pIds);
+        List<PublicCommentDto> list=new ArrayList<>();
+        list.addAll(unReadComment1);
+        list.addAll(unReadComment2);
+        if (list != null && list.size() > 0) {
+            return new ResultDto(200, "success", list);
         } else {
             return new ResultDto(200,"failure",null);
         }

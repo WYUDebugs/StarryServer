@@ -7,8 +7,9 @@
 
     <!--添加评论-->
     <insert id="addComment" parameterType="com.zhuolang.starryserver.entity.PublicComment">
-        INSERT ignore INTO public_comment_tab(commentator,receiver_id,public_id,comment_time,comment_content)
-        VALUES (#{comment.commentator},#{comment.receiveId},#{comment.publicId},#{comment.commentTime},#{comment.commentContent})
+        INSERT ignore INTO public_comment_tab(commentator,receiver_id,public_id,comment_time,comment_content,state)
+        VALUES (#{comment.commentator},#{comment.receiveId},#{comment.publicId},
+        #{comment.commentTime},#{comment.commentContent},#{comment.state})
     </insert>
 
    <!-- 通过评论表id删除评论-->
@@ -31,13 +32,45 @@
         WHERE public_id=#{pId}
     </select>
 
+    <update id="updateCommentState">
+        UPDATE public_comment_tab
+        SET state=1
+        <where>
+            <foreach collection="cmIds" item="item" open="cm_id IN (" close=")"
+                     separator=",">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+
+    <select id="showUnReadComment" resultType="com.zhuolang.starryserver.entity.PublicCommentDto" resultMap="commentResult">
+        SELECT P.*,U.phone,U.name,U.headimage
+        FROM  public_comment_tab P
+        LEFT OUTER JOIN user_tab U ON P.commentator=U.id
+         where   P.state=0 and P.commentator!=#{uId} and P.public_id in
+        <foreach collection="pIds" index="index" item="item" open="(" separator="," close=")">
+                           #{item}
+        </foreach>
+    </select>
+
+    <select id="showUnReadComment2" resultType="com.zhuolang.starryserver.entity.PublicCommentDto" resultMap="commentResult">
+        SELECT P.*,U.phone,U.name,U.headimage
+        FROM  public_comment_tab P
+        LEFT OUTER JOIN user_tab U ON P.commentator=U.id
+        where   P.state=0 and P.receiver_id=#{uId} and P.public_id not in
+        <foreach collection="pIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <resultMap id="commentResult" type="com.zhuolang.starryserver.entity.PublicCommentDto">
         <id property="cmId" column="cm_id"/>
         <result property="commentator" column="commentator"/>
-        <result property="receiveId" column="receive_id"/>
+        <result property="receiveId" column="receiver_id"/>
         <result property="publicId" column="public_id"/>
         <result property="commentTime" column="comment_time"/>
         <result property="commentContent" column="comment_content"/>
+        <result property="state" column="state"/>
         <!--一对一查询-->
         <association property="cUser" javaType="com.zhuolang.starryserver.entity.User">
             <id property="id" column="commentator" />
@@ -47,7 +80,7 @@
         </association>
 
         <association property="rUser" javaType="com.zhuolang.starryserver.entity.User">
-            <id property="id" column="receive_id" />
+            <id property="id" column="receiver_id" />
             <result property="phone" column="phone" />
             <result property="name" column="name" />
             <result property="headimage" column="headimage" />

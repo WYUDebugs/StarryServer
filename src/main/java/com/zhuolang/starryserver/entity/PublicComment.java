@@ -10,6 +10,7 @@ public class PublicComment {
     private int publicId;
     private String  commentTime;
     private String commentContent;
+    private int state;
 
     public int getCmId() {
         return cmId;
@@ -59,6 +60,14 @@ public class PublicComment {
         this.commentContent = commentContent;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "PublicComment{" +
@@ -68,6 +77,7 @@ public class PublicComment {
                 ", publicId=" + publicId +
                 ", commentTime='" + commentTime + '\'' +
                 ", commentContent='" + commentContent + '\'' +
+                ", state=" + state +
                 '}';
     }
 }

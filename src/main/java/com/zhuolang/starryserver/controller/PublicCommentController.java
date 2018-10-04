@@ -7,10 +7,13 @@ import com.zhuolang.starryserver.service.PublicCommentService;
 import com.zhuolang.starryserver.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 
 @Controller
@@ -36,6 +39,11 @@ public class PublicCommentController {
         if (request.getParameter("rId") != null) {
             int rId = Integer.parseInt(request.getParameter("rId")); //获取被评论者的id
             comment.setReceiveId(rId);
+        }
+        if (comment.getReceiveId() == 0) {
+            comment.setState(1);
+        } else {
+            comment.setState(0);
         }
         int pId=Integer.parseInt(request.getParameter("pId")); //获取评论帖子的id
         comment.setPublicId(pId);
@@ -93,6 +101,29 @@ public class PublicCommentController {
         int pId=Integer.parseInt(request.getParameter("pId")); //获取帖子的id
         ResultDto resultDto=publicCommentService.showAllComment(pId);
         return resultDto;
+    }
+
+    /**
+     * 将未读评论标记为已读
+     * @param ids
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/updateCommentState")
+    public ResultDto updateCommentState(@RequestParam(value = "ids") List<Integer> ids) {
+        return publicCommentService.updateCommentState(ids);
+    }
+
+    /**
+     * 展示未读的评论列表
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+    @RequestMapping(value = "/showUnReadComment")
+    public ResultDto showUnReadComment(HttpServletRequest request) {
+        int uId=Integer.parseInt(request.getParameter("uId"));//获取用户的id
+        return publicCommentService.showUnReadComment(uId);
     }
 
 

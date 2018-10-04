@@ -17,4 +17,10 @@ public interface PublicCommentDao {
     List<Integer> showCMansId(@Param("pId")int pId);
 
     List<PublicCommentDto> showCommentIdList(@Param("pId") int pId);
+
+    int updateCommentState(@Param("cmIds")List<Integer> cmIds);
+
+    List<PublicCommentDto> showUnReadComment(@Param("uId")int uId,@Param("pIds")List<Integer> pIds);
+
+    List<PublicCommentDto> showUnReadComment2(@Param("uId")int uId,@Param("pIds")List<Integer> pIds);
 }
