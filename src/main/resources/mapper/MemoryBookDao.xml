@@ -88,19 +88,32 @@
         FROM memory_friend_tab
         WHERE friend_id=#{uId}
     </select>
-
+    <!--更新friend Count，添加成员+1-->
     <update id="updateFriendCount">
         UPDATE memory_book_tab
         SET friend_count=friend_count+1
         WHERE id=#{bId}
     </update>
-
+    <!--更新friend Count，删除成员-1-->
     <update id="updateFriendCount2">
         UPDATE memory_book_tab
         SET friend_count=friend_count-1
         WHERE id=#{bId}
     </update>
-    
+    <!--更新moment count，发送moment+1-->
+    <update id="updateMomentCount">
+        UPDATE memory_book_tab
+        SET moment_count=moment_count+1
+        WHERE id=#{bId}
+    </update>
+    <!--更新moment count，删除moment-1-->
+    <update id="updateMomentCount2">
+        UPDATE memory_book_tab
+        SET moment_count=moment_count-1
+        WHERE id=#{bId}
+    </update>
+
+
     <resultMap id="booksResult" type="com.zhuolang.starryserver.entity.MemoryBookDto">
         <id column="id" property="id"/>
         <result column="owner" property="owner"/>

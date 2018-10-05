@@ -11,5 +11,5 @@ public interface MomentDao {
 
     int deleteByMomentId(@Param("mId")int mId);
 
-    List<Moment> findMomentListByOwners( @Param("ids") List<Integer> ids);
+    List<Moment> findMomentListBybId( @Param("bId") int bId);
 }

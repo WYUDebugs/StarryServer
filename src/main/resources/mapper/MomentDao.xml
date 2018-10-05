@@ -6,8 +6,8 @@
 <mapper namespace="com.zhuolang.starryserver.dao.MomentDao">
 
     <insert id="installMoment" useGeneratedKeys="true" keyProperty="moment.id" >
-        INSERT INTO moment_tab(sender,send_time,location_time,content)
-                VALUES (#{moment.sender},#{moment.send_time},#{moment.location_time},#{moment.content});
+        INSERT INTO moment_tab(sender,send_time,location_time,content,book_id)
+                VALUES (#{moment.sender},#{moment.send_time},#{moment.location_time},#{moment.content},#{moment.bookId});
     </insert>
 
     <delete id="deleteByMomentId">
@@ -22,6 +22,7 @@
         <result column="send_time" property="send_time"/>
         <result column="location_time" property="location_time"/>
         <result column="content" property="content"/>
+        <result column="book_id" property="bookId"/>
         <!--一对一查询-->
         <association property="user" javaType="com.zhuolang.starryserver.entity.User">
             <id property="id" column="sender" />
@@ -39,18 +40,12 @@
     </resultMap>
 
 
-    <select id="findMomentListByOwners" resultType="com.zhuolang.starryserver.entity.Moment" resultMap="momentResult">
+    <select id="findMomentListBybId" resultType="com.zhuolang.starryserver.entity.Moment" resultMap="momentResult">
         SELECT M.*,I.*,U.phone,U.name,U.headimage
         FROM moment_tab M
         LEFT OUTER JOIN moment_image_tab I ON M.id=I.moment_id
         LEFT OUTER JOIN user_tab U ON M.sender=U.id
-        <where>
-
-            <foreach collection="ids" item="item" open="M.sender IN (" close=")"
-                     separator=",">
-                #{item}
-            </foreach>
-        </where>
+        WHERE book_id=#{bId}
         ORDER BY send_time DESC ;
     </select>
 

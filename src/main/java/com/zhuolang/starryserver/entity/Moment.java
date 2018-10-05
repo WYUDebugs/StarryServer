@@ -8,24 +8,9 @@ public class Moment {
     private  String send_time;
     private  String location_time;
     private  String content;
+    private int bookId;
     private List<MomentImage> imageList;
     private User user;
-
-    public List<MomentImage> getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(List<MomentImage> imageList) {
-        this.imageList = imageList;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public int getId() {
         return id;
@@ -65,5 +50,43 @@ public class Moment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public List<MomentImage> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<MomentImage> imageList) {
+        this.imageList = imageList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Moment{" +
+                "id=" + id +
+                ", sender=" + sender +
+                ", send_time='" + send_time + '\'' +
+                ", location_time='" + location_time + '\'' +
+                ", content='" + content + '\'' +
+                ", bookId=" + bookId +
+                ", imageList=" + imageList +
+                ", user=" + user +
+                '}';
     }
 }

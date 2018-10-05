@@ -93,4 +93,6 @@ public interface MemoryBookDao {//添加Dao的test时，选中类名，右键go 
     int showBookNum2(@Param("uId")int uId);
     int updateFriendCount(@Param("bId")int bId);
     int updateFriendCount2(@Param("bId")int bId);
+    int updateMomentCount(@Param("bId")int bId);
+    int updateMomentCount2(@Param("bId")int bId);
 }

@@ -7,6 +7,7 @@ import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.Moment;
 import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.MomentService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +32,14 @@ public class MomentServiceImpl implements MomentService{
         try {
             if (momentDao.installMoment(moment)==1) {
                 int momentId = moment.getId();
+                int bookId=moment.getBookId();
                 for (int i = 0; i < imageList.size(); i++) {
                     if (momentImageDao.addMomentImage(momentId,imageList.get(i))==1){
+                        if (memoryBookDao.updateMomentCount(bookId) == 1) {
 
+                        } else {
+                            throw new MyThrowException("update_momentCount_failure");
+                        }
                     } else {
                         throw new MyThrowException("install_image_failure");
                     }
@@ -47,17 +53,51 @@ public class MomentServiceImpl implements MomentService{
         return 1;
     }
 
+    @Transactional
     @Override
     public int sendMomentNoImage(Moment moment) {
-        return momentDao.installMoment(moment);
+        int bookId=moment.getBookId();
+        try {
+            if (momentDao.installMoment(moment) == 1) {
+                if (memoryBookDao.updateMomentCount(bookId) == 1) {
+                } else {
+                    throw new MyThrowException("update_momentCount_failure");
+                }
+            } else {
+                throw new MyThrowException("install_moment_failure");
+            }
+        } catch (MyThrowException e) {
+            throw e;
+        }
+        return 1;
+    }
+
+    @Transactional
+    @Override
+    public int deleteByMomentId(int mId,int bId) {
+       int result=0;
+        try {
+            if (momentDao.deleteByMomentId(mId) == 1) {
+                if (memoryBookDao.updateMomentCount2(bId) == 1) {
+                    result = 1;
+                } else {
+                    throw new MyThrowException("update_momentCount_failure");
+                }
+            } else {
+                throw new MyThrowException("delete_comment_failure");
+            }
+        } catch (MyThrowException e) {
+            throw e;
+        }
+        return result;
     }
 
 
     @Override
-    public List<Moment> findMomentListByOwners(int bId) {
-         List<Integer> ownerList =memoryBookDao.findOwners(bId);
-        if (ownerList != null && ownerList.size() > 0) {
-            return momentDao.findMomentListByOwners(ownerList);
+    public List<Moment> findMomentListBybId(int bId) {
+       List<Moment> momentList=momentDao.findMomentListBybId(bId);
+        if (momentList != null && momentList.size() > 0) {
+            return momentList;
         } else {
             return null;
         }
