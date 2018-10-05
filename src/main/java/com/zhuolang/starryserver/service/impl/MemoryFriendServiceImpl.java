@@ -1,10 +1,14 @@
 package com.zhuolang.starryserver.service.impl;
 
+import com.zhuolang.starryserver.dao.MemoryBookDao;
 import com.zhuolang.starryserver.dao.MemoryFriendDao;
 import com.zhuolang.starryserver.entity.MemoryFriend;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.MemoryFriendService;
+import com.zhuolang.starryserver.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -13,17 +17,39 @@ import java.util.List;
 public class MemoryFriendServiceImpl implements MemoryFriendService {
     @Autowired
     private MemoryFriendDao memoryFriendDao;
+    @Autowired
+    private MemoryBookDao memoryBookDao;
 
     /**
      * 通过friendId添加纪念册好友
-     *
+     * 事务更新成员的数量
      * @param friend_id
      * @param memory_book_id
      * @return 添加成功返回1，否则返回0
      */
+    @Transactional
     @Override
     public int addMemoryFriend(int friend_id, int memory_book_id) {
-        return memoryFriendDao.addMemoryFriend(friend_id,memory_book_id,new Date());
+//        return memoryFriendDao.addMemoryFriend(friend_id,memory_book_id,new Date());
+        try {
+            MemoryFriend friend=memoryFriendDao.checkFriend(friend_id,memory_book_id);
+            if (friend == null) {
+                if (memoryFriendDao.addMemoryFriend(friend_id, memory_book_id, new Date()) == 1) {
+                    if (memoryBookDao.updateFriendCount(memory_book_id) == 1) {
+
+                    } else {
+                        throw new MyThrowException("update_friendCount_fail");
+                    }
+                } else {
+                    throw new MyThrowException("add_friend_fail");
+                }
+            } else {
+                throw new MyThrowException("friend_exit");
+            }
+        }catch (MyThrowException e) {
+            throw e;
+        }
+        return 1;
     }
 
     /**

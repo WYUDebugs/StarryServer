@@ -5,6 +5,7 @@ import com.zhuolang.starryserver.dao.MemoryFriendDao;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.MemoryFriend;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.MemoryFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,24 @@ public class MemoryFriendController extends BaseExceptionHandleAction {
      */
     @ResponseBody//将数据返回为json
     @RequestMapping(value = "/addMemoryFriend")
+
     public ResultDto addMemoryFriend(HttpServletRequest request){
         int friendId = Integer.parseInt(request.getParameter("friendId"));
         int memoryBookId = Integer.parseInt(request.getParameter("memoryBookId"));
-        MemoryFriend friend=memoryFriendDao.checkFriend(friendId,memoryBookId);
+        int result=0;
+        try {
+            result=memoryFriendService.addMemoryFriend(friendId,memoryBookId);
+        }catch (MyThrowException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            return new ResultDto(200, "add_success", null);
+        } else {
+            return new ResultDto(200, "add_failure", null);
+        }
+  /*      MemoryFriend friend=memoryFriendDao.checkFriend(friendId,memoryBookId);
         if (friend != null) {
             return new ResultDto(200, "addMemoryFriend_fail", null);
         } else {
@@ -49,7 +64,7 @@ public class MemoryFriendController extends BaseExceptionHandleAction {
             }else {
                 return new ResultDto(200,"addMemoryFriend_fail",null);
             }
-        }
+        }*/
 
     }
 
