@@ -1,27 +1,20 @@
 package com.zhuolang.starryserver.entity;
 
 public class MomentComment{
-    private int id;
+    private int mcId;
     private int commentator;
     private User user;
     private int momentId;
     private String commentTime;
     private String commentContent;
+    private int state;
 
-    public User getUser() {
-        return user;
+    public int getMcId() {
+        return mcId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setMcId(int mcId) {
+        this.mcId = mcId;
     }
 
     public int getCommentator() {
@@ -30,6 +23,14 @@ public class MomentComment{
 
     public void setCommentator(int commentator) {
         this.commentator = commentator;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getMomentId() {
@@ -54,5 +55,26 @@ public class MomentComment{
 
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "MomentComment{" +
+                "mcId=" + mcId +
+                ", commentator=" + commentator +
+                ", user=" + user +
+                ", momentId=" + momentId +
+                ", commentTime='" + commentTime + '\'' +
+                ", commentContent='" + commentContent + '\'' +
+                ", state=" + state +
+                '}';
     }
 }

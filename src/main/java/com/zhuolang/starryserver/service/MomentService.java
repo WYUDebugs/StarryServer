@@ -10,5 +10,6 @@ public interface MomentService {
     int sendMomentNoImage(Moment moment);
     int deleteByMomentId(int mId,int bId);
     List<Moment> findMomentListBybId(int bId);
+    ResultDto findMomentBymId(int mId);
 
 }

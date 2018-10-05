@@ -1,16 +1,16 @@
 package com.zhuolang.starryserver.entity;
 
 public class MomentImage {
-    private int id;
+    private int imageId;
     private int moment_id;
     private String path;
 
-    public int getId() {
-        return id;
+    public int getImageId() {
+        return imageId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
     public int getMoment_id() {
@@ -27,5 +27,14 @@ public class MomentImage {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public String toString() {
+        return "MomentImage{" +
+                "imageId=" + imageId +
+                ", moment_id=" + moment_id +
+                ", path='" + path + '\'' +
+                '}';
     }
 }

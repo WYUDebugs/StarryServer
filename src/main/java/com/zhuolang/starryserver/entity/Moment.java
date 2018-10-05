@@ -11,6 +11,7 @@ public class Moment {
     private int bookId;
     private List<MomentImage> imageList;
     private User user;
+    private List<MomentComment> commentList;
 
     public int getId() {
         return id;
@@ -76,6 +77,14 @@ public class Moment {
         this.user = user;
     }
 
+    public List<MomentComment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<MomentComment> commentList) {
+        this.commentList = commentList;
+    }
+
     @Override
     public String toString() {
         return "Moment{" +
@@ -87,6 +96,7 @@ public class Moment {
                 ", bookId=" + bookId +
                 ", imageList=" + imageList +
                 ", user=" + user +
+                ", commentList=" + commentList +
                 '}';
     }
 }

@@ -112,5 +112,17 @@ public class MomentController {
 
     }
 
+    /**
+     * 获取moment详细信息
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回的数据处理为json
+        @RequestMapping(value = "/ShowOneMoment")
+    public ResultDto ShowOneMoment(HttpServletRequest request) {
+       int mId=Integer.parseInt(request.getParameter("mId"));//获取片段的id
+        return momentService.findMomentBymId(mId);
+    }
+
 
 }

@@ -25,6 +25,13 @@ public class MomentCommentController {
         MomentComment mComment=new MomentComment();
         int cId=Integer.parseInt(request.getParameter("cId")); //获取评论者的id
         mComment.setCommentator(cId);
+        int uId=Integer.parseInt(request.getParameter("uId"));//获取userId
+        //如果uId等于cId，自己的评论，state插入为1，已读
+        if (uId == cId) {
+            mComment.setState(1);
+        } else {
+            mComment.setState(0);
+        }
         int mId=Integer.parseInt(request.getParameter("mId")); //获取评论片段的id
         mComment.setMomentId(mId);
         mComment.setCommentTime(TimeUtil.dateToString(new Date()));
@@ -36,7 +43,7 @@ public class MomentCommentController {
     @RequestMapping(value = "/showMComments")
     public ResultDto showMComments( HttpServletRequest request) {
 
-        int mId=Integer.parseInt(request.getParameter("mId")); //获取片段的id
+            int mId=Integer.parseInt(request.getParameter("mId")); //获取片段的id
         ResultDto resultDto=momentCommentService.showComments(mId);
         return resultDto;
     }

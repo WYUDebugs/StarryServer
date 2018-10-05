@@ -12,4 +12,6 @@ public interface MomentDao {
     int deleteByMomentId(@Param("mId")int mId);
 
     List<Moment> findMomentListBybId( @Param("bId") int bId);
+
+    Moment findMomentBymId(@Param("mId")int mId);
 }

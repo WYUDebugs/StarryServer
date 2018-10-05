@@ -102,4 +102,15 @@ public class MomentServiceImpl implements MomentService{
             return null;
         }
     }
+
+    @Override
+    public ResultDto findMomentBymId(int mId) {
+        Moment moment=momentDao.findMomentBymId(mId);
+        if (moment != null) {
+            return new ResultDto(200, "success", moment);
+        } else {
+            return new ResultDto(200,"noDate",null);
+        }
+
+    }
 }

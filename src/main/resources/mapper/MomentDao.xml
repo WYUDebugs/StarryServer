@@ -31,22 +31,48 @@
             <result property="headimage" column="headimage" />
         </association>
         <collection property="imageList" resultMap="ImageResult"/>
+        <collection property="commentList" resultMap="commentResult"/>
     </resultMap>
     <!--一对多查询-->
     <resultMap type="com.zhuolang.starryserver.entity.MomentImage" id="ImageResult">
-        <result column="id" property="id"/>
+        <result column="image_id" property="imageId"/>
         <result column="moment_id" property="moment_id"/>
         <result column="path" property="path"/>
     </resultMap>
+    <!--评论结果集-->
+    <resultMap id="commentResult" type="com.zhuolang.starryserver.entity.MomentComment">
+        <id     column="mc_id" property="mcId"/>
+        <result property="commentator" column="commentator"/>
+        <result property="momentId" column="moment_id"/>
+        <result property="commentTime" column="comment_time"/>
+        <result property="commentContent" column="comment_content"/>
+        <result property="state" column="state"/>
+        <association property="user" javaType="com.zhuolang.starryserver.entity.User"
+                     column="commentator" select="findManOfComment">
+        </association>
+    </resultMap>
 
+    <select id="findManOfComment" resultType="com.zhuolang.starryserver.entity.User">
+        select id,phone,name,headimage from user_tab where id=#{000}
+    </select>
 
     <select id="findMomentListBybId" resultType="com.zhuolang.starryserver.entity.Moment" resultMap="momentResult">
-        SELECT M.*,I.*,U.phone,U.name,U.headimage
+        SELECT M.*,I.*,C.*,U.phone,U.name,U.headimage
         FROM moment_tab M
         LEFT OUTER JOIN moment_image_tab I ON M.id=I.moment_id
         LEFT OUTER JOIN user_tab U ON M.sender=U.id
+        LEFT OUTER JOIN moment_comment_tab C ON M.id=C.moment_id
         WHERE book_id=#{bId}
         ORDER BY send_time DESC ;
+    </select>
+
+    <select id="findMomentBymId" resultType="com.zhuolang.starryserver.entity.Moment" resultMap="momentResult">
+        SELECT M.*,I.*,C.*,U.phone,U.name,U.headimage
+        FROM moment_tab M
+        LEFT OUTER JOIN moment_image_tab I ON M.id=I.moment_id
+        LEFT OUTER JOIN user_tab U ON M.sender=U.id
+        LEFT OUTER JOIN moment_comment_tab C ON M.id=C.moment_id
+        WHERE M.id=#{mId}
     </select>
 
 </mapper>

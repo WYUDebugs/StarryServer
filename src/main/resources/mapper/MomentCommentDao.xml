@@ -6,17 +6,19 @@
 <mapper namespace="com.zhuolang.starryserver.dao.MomentCommentDao">
 
    <!-- 发表评论-->
-    <insert id="addMomentComment" useGeneratedKeys="true" keyProperty="mComment.id">
-        INSERT INTO moment_comment_tab(commentator,moment_id,comment_time,comment_content)
-        VALUES (#{mComment.commentator},#{mComment.momentId},#{mComment.commentTime},#{mComment.commentContent});
+    <insert id="addMomentComment" useGeneratedKeys="true" keyProperty="mComment.mcId">
+        INSERT INTO moment_comment_tab(commentator,moment_id,comment_time,comment_content,state)
+        VALUES (#{mComment.commentator},#{mComment.momentId},#{mComment.commentTime},
+        #{mComment.commentContent},#{mComment.state});
     </insert>
 
     <resultMap id="mCommentResult" type="com.zhuolang.starryserver.entity.MomentComment">
-        <id property="id" column="id"/>
+        <id property="mcId" column="mc_id"/>
         <result property="commentator" column="commentator"/>
         <result property="momentId" column="moment_id"/>
         <result property="commentTime" column="comment_time"/>
         <result property="commentContent" column="comment_content"/>
+        <result property="state" column="state"/>
 
         <association property="user" javaType="com.zhuolang.starryserver.entity.User">
             <id property="id" column="commentator"/>
