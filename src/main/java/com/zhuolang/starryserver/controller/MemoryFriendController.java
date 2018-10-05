@@ -78,11 +78,23 @@ public class MemoryFriendController extends BaseExceptionHandleAction {
     @RequestMapping(value = "/deleteMemoryFriend")
     public ResultDto deleteMemoryFriend(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
-
-        if (memoryFriendService.deleteMemoryFriend(id) == 1){
-            return new ResultDto(200,"deleteMemoryFriend_success",null);
-        }else {
-            return new ResultDto(200,"deleteMemoryFriend_fail",null);
+//        if (memoryFriendService.deleteMemoryFriend(id) == 1){
+//            return new ResultDto(200,"deleteMemoryFriend_success",null);
+//        }else {
+//            return new ResultDto(200,"deleteMemoryFriend_fail",null);
+//        }
+        int result=0;
+        try {
+            result=memoryFriendService.deleteMemoryFriend(id);
+        }catch (MyThrowException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            return new ResultDto(200, "delete_success", null);
+        } else {
+            return new ResultDto(200, "delete_failure", null);
         }
     }
 

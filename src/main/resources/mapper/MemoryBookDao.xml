@@ -94,6 +94,12 @@
         SET friend_count=friend_count+1
         WHERE id=#{bId}
     </update>
+
+    <update id="updateFriendCount2">
+        UPDATE memory_book_tab
+        SET friend_count=friend_count-1
+        WHERE id=#{bId}
+    </update>
     
     <resultMap id="booksResult" type="com.zhuolang.starryserver.entity.MemoryBookDto">
         <id column="id" property="id"/>
