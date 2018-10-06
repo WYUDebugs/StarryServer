@@ -286,6 +286,13 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
         return new ResultDto(200,"success",numResult);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/findBookDetailed")
+    public ResultDto findBookDetailed(HttpServletRequest request) {
+        int bId = Integer.parseInt(request.getParameter("bId"));
+        return memoryBookService.findBookById(bId);
+    }
+
 
 
 }

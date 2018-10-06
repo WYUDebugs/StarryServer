@@ -3,6 +3,7 @@ package com.zhuolang.starryserver.service.impl;
 import com.zhuolang.starryserver.dao.MemoryBookDao;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.MemoryBook;
+import com.zhuolang.starryserver.entity.MemoryBookDto;
 import com.zhuolang.starryserver.service.MemoryBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,5 +134,16 @@ public class MemoryBookServiceImpl implements MemoryBookService {
         int result1=memoryBookDao.showBookNum1(uId);
         int result2=memoryBookDao.showBookNum2(uId);
         return result1+result2;
+    }
+
+    @Override
+    public ResultDto findBookById(int bId) {
+        MemoryBookDto memoryBookDto=memoryBookDao.findBookById(bId);
+        if (memoryBookDto != null) {
+            return new ResultDto(200, "success", memoryBookDto);
+        } else {
+            return new ResultDto(200,"failure",null);
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package com.zhuolang.starryserver.dao;
 
 import com.zhuolang.starryserver.entity.MemoryBook;
+import com.zhuolang.starryserver.entity.MemoryBookDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -95,4 +96,5 @@ public interface MemoryBookDao {//添加Dao的test时，选中类名，右键go 
     int updateFriendCount2(@Param("bId")int bId);
     int updateMomentCount(@Param("bId")int bId);
     int updateMomentCount2(@Param("bId")int bId);
+    MemoryBookDto findBookById(@Param("bId")int bId);
 }

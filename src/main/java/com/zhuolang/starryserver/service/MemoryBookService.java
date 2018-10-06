@@ -84,4 +84,6 @@ public interface MemoryBookService {
     List<MemoryBook> showBookList(int uId);
 
     int showBookNum(int uId);
+
+    ResultDto findBookById(int bId);
 }
