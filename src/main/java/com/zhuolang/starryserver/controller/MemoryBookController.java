@@ -2,9 +2,11 @@ package com.zhuolang.starryserver.controller;
 
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.MemoryBook;
+import com.zhuolang.starryserver.entity.MemoryBookDto;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
 import com.zhuolang.starryserver.service.MemoryBookService;
 import com.zhuolang.starryserver.utils.FileUploadUtil;
+import com.zhuolang.starryserver.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -292,6 +295,26 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
         int bId = Integer.parseInt(request.getParameter("bId"));
         return memoryBookService.findBookById(bId);
     }
+
+    /**
+     * 添加book，返回刚添加的book的详细信息
+     * @param request
+     * @return
+     */
+    @ResponseBody//将返回数据处理为json
+    @RequestMapping(value = "/addBook")
+    public ResultDto addBook(HttpServletRequest request) {
+
+        int owner = parseInt(request.getParameter("owner"));
+        String title = request.getParameter("title");
+        MemoryBookDto  bookDto=new MemoryBookDto();
+        bookDto.setOwner(owner);
+        bookDto.setTitle(title);
+        bookDto.setCreatTime(TimeUtil.dateToString(new Date()));
+        ResultDto resultDto = memoryBookService.addBook(bookDto);
+        return resultDto;
+    }
+
 
 
 

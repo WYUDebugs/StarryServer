@@ -146,4 +146,19 @@ public class MemoryBookServiceImpl implements MemoryBookService {
         }
 
     }
+
+    @Override
+    public ResultDto addBook(MemoryBookDto bookDto) {
+        int result=memoryBookDao.addBook(bookDto);
+        if (result==1) {
+            int bId=bookDto.getId();
+            MemoryBookDto memoryBookDto=memoryBookDao.findBookById(bId);
+            if (memoryBookDto != null) {
+                return new ResultDto(200, "add_success", memoryBookDto);
+            } else {
+                return new ResultDto(200,"find_failure",null);
+            }
+        }
+        return new ResultDto(200,"add_failure",null);
+    }
 }

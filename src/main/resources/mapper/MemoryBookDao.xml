@@ -132,7 +132,7 @@
 
     <select id="memoryBookListResult" resultMap="booksResult">
         SELECT distinct B.*
-        FROM memory_book_tab memory_book_tab
+        FROM memory_book_tab B
         LEFT  OUTER JOIN memory_friend_tab F ON B.id=F.memory_book_id
         WHERE B.owner=#{uId} OR F.friend_id=#{uId}
         ORDER BY creat_time DESC
@@ -143,5 +143,10 @@
         FROM memory_book_tab B
         WHERE B.id=#{bId}
     </select>
+
+    <insert id="addBook" useGeneratedKeys="true" keyProperty="bookDto.id" >
+        INSERT INTO memory_book_tab(owner,title,creat_time)
+        VALUES (#{bookDto.owner},#{bookDto.title},#{bookDto.creatTime});
+    </insert>
 
 </mapper>

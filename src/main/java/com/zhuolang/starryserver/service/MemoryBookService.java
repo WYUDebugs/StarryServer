@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.service;
 
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.MemoryBook;
+import com.zhuolang.starryserver.entity.MemoryBookDto;
 
 import java.util.List;
 
@@ -86,4 +87,6 @@ public interface MemoryBookService {
     int showBookNum(int uId);
 
     ResultDto findBookById(int bId);
+
+    ResultDto addBook(MemoryBookDto bookDto);
 }

@@ -97,4 +97,5 @@ public interface MemoryBookDao {//添加Dao的test时，选中类名，右键go 
     int updateMomentCount(@Param("bId")int bId);
     int updateMomentCount2(@Param("bId")int bId);
     MemoryBookDto findBookById(@Param("bId")int bId);
+    int addBook(@Param("bookDto")MemoryBookDto bookDto);
 }
