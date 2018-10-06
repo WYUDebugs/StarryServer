@@ -18,10 +18,9 @@ public interface MemoryFriendService {
     /**
      * 通过id删除纪念册好友
      *
-     * @param id
      * @return 删除成功返回1，否则返回0
      */
-    int deleteMemoryFriend(int id);
+    int deleteMemoryFriend(int fId,int bId);
 
     /**
      * 通过memory_book_id展示该纪念册好友

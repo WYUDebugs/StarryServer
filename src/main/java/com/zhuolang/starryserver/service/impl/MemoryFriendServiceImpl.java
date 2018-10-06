@@ -55,16 +55,15 @@ public class MemoryFriendServiceImpl implements MemoryFriendService {
     /**
      * 通过id删除纪念册好友
      * 事务更新book表friend Count
-     * @param id
+     * @param
      * @return 删除成功返回1，否则返回0
      */
     @Transactional
     @Override
-    public int deleteMemoryFriend(int id) {
+    public int deleteMemoryFriend(int fId,int bId) {
 //        return memoryFriendDao.deleteMemoryFriend(id);
-        int bId=memoryFriendDao.findBookId(id);
         try {
-            if (memoryFriendDao.deleteMemoryFriend(id) == 1) {
+            if (memoryFriendDao.deleteMemoryFriend(fId, bId) == 1) {
                 if (memoryBookDao.updateFriendCount2(bId) == 1) {
                 } else {
                     throw new MyThrowException("update_count_fail");

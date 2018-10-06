@@ -77,15 +77,17 @@ public class MemoryFriendController extends BaseExceptionHandleAction {
     @ResponseBody//将数据返回为json
     @RequestMapping(value = "/deleteMemoryFriend")
     public ResultDto deleteMemoryFriend(HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("id"));
+//        int id = Integer.parseInt(request.getParameter("id"));
 //        if (memoryFriendService.deleteMemoryFriend(id) == 1){
 //            return new ResultDto(200,"deleteMemoryFriend_success",null);
 //        }else {
 //            return new ResultDto(200,"deleteMemoryFriend_fail",null);
 //        }
+        int fId=Integer.parseInt(request.getParameter("fId"));
+        int bId=Integer.parseInt(request.getParameter("bId"));
         int result=0;
         try {
-            result=memoryFriendService.deleteMemoryFriend(id);
+            result=memoryFriendService.deleteMemoryFriend(fId,bId);
         }catch (MyThrowException e) {
             e.printStackTrace();
         } catch (Exception e) {

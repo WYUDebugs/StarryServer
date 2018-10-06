@@ -14,7 +14,7 @@
     <!--通过id删除纪念册好友-->
     <delete id="deleteMemoryFriend">
         delete from memory_friend_tab
-        where id =#{id}
+        where friend_id=#{fId} AND memory_book_id=#{bId}
     </delete>
 
     <!--通过memory_book_id列表展示该纪念册好友-->

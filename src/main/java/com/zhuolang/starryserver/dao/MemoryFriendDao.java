@@ -22,10 +22,10 @@ public interface MemoryFriendDao {
     /**
      * 通过id删除纪念册好友
      *
-     * @param id
+     * @param
      * @return 删除成功返回1，否则返回0
      */
-    int deleteMemoryFriend(@Param("id")int id);
+    int deleteMemoryFriend(@Param("fId")int fId,@Param("bId")int bId);
 
     /**
      * 通过memory_book_id展示该纪念册好友
