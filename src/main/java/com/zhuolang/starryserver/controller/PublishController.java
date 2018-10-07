@@ -150,18 +150,30 @@ public class PublishController extends BaseExceptionHandleAction {
         }
     }
     /**
-     * 个人主页删除一条贴子时会用到
+     * 删除一条贴子
      * 通过帖子的id 删除对应的帖子同时删除与之关联的表的数据
-     * 使用该功能需要把帖子id传过来
      * @param request
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/deleteOne")
     public ResultDto deletePublish(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        ResultDto resultDto = publishService.deletePublisher(id);
-        return resultDto;
+        int id = Integer.parseInt(request.getParameter("id")); //获取帖子的id
+        int result=0;
+        try {
+            result= publishService.deletePublish(id);
+        } catch (MyThrowException e) {
+            System.out.println("异常捕捉：MyThrowException：" + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("异常捕捉：Exception：" + e.getMessage());
+            e.printStackTrace();
+        }if (result == 1) {
+            return new ResultDto(200, "delete_success", null);
+        } else {
+            return new ResultDto(200, "delete_failure", null);
+        }
+
     }
 
     /**

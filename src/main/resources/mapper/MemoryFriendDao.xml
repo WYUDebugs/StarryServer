@@ -17,6 +17,10 @@
         where friend_id=#{fId} AND memory_book_id=#{bId}
     </delete>
 
+    <delete id="deleteAllFriendByBid">
+        DELETE FROM memory_friend_tab
+        WHERE memory_book_id=#{bId}
+    </delete>
     <!--通过memory_book_id列表展示该纪念册好友-->
     <select id="findMemoryFriend" resultType="com.zhuolang.starryserver.entity.MemoryFriend">
         select *

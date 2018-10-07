@@ -97,7 +97,7 @@
     <!--更新friend Count，删除成员-1-->
     <update id="updateFriendCount2">
         UPDATE memory_book_tab
-        SET friend_count=friend_count-1
+        SET friend_count = IF(friend_count&lt;1, 0, friend_count-1)
         WHERE id=#{bId}
     </update>
     <!--更新moment count，发送moment+1-->
@@ -109,7 +109,7 @@
     <!--更新moment count，删除moment-1-->
     <update id="updateMomentCount2">
         UPDATE memory_book_tab
-        SET moment_count=moment_count-1
+        SET moment_count=IF(moment_count&lt;1, 0, moment_count-1)
         WHERE id=#{bId}
     </update>
 

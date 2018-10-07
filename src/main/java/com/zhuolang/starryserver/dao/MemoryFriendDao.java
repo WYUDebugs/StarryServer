@@ -38,4 +38,5 @@ public interface MemoryFriendDao {
 
     int findBookId(@Param("fId")int fId);
 
+    int deleteAllFriendByBid(@Param("bId")int bId);
 }

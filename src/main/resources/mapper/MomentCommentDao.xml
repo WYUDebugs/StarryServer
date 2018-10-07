@@ -12,6 +12,11 @@
         #{mComment.commentContent},#{mComment.state});
     </insert>
 
+    <delete id="deleteCommentByMid">
+        DELETE FROM moment_comment_tab
+        WHERE moment_id=#{mId}
+    </delete>
+
     <resultMap id="mCommentResult" type="com.zhuolang.starryserver.entity.MomentComment">
         <id property="mcId" column="mc_id"/>
         <result property="commentator" column="commentator"/>

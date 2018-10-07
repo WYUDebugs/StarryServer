@@ -91,11 +91,11 @@ public class MomentController {
     @ResponseBody//将返回的数据处理为json
     @RequestMapping(value = "/deleteMoment")
     public ResultDto deleteMoment(HttpServletRequest request) {
-        int bId = Integer.parseInt(request.getParameter("bId")); //获取纪念册id，用以 更新纪念册的count
+
         int mId=Integer.parseInt(request.getParameter("mId"));//获取片段的id，用以删除片段
         int result=0;
         try {
-            result=momentService.deleteByMomentId(mId,bId);
+            result=momentService.deleteByMomentId(mId);
 
         }  catch (MyThrowException e) {
             System.out.println("异常捕捉：MyThrowException：" + e.getMessage());

@@ -1,12 +1,15 @@
 package com.zhuolang.starryserver.service.impl;
 
-import com.zhuolang.starryserver.dao.MemoryBookDao;
+import com.sun.tracing.dtrace.ArgsAttributes;
+import com.zhuolang.starryserver.dao.*;
 import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.MemoryBook;
 import com.zhuolang.starryserver.entity.MemoryBookDto;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.MemoryBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -16,7 +19,15 @@ import java.util.List;
 public class MemoryBookServiceImpl implements MemoryBookService {
 
     @Autowired
-    MemoryBookDao memoryBookDao;
+    private MemoryBookDao memoryBookDao;
+    @Autowired
+    private MomentDao momentDao;
+    @Autowired
+    private MomentImageDao momentImageDao;
+    @Autowired
+    private MomentCommentDao commentDao;
+    @Autowired
+    private MemoryFriendDao friendDao;
 
     /**
      * 通过title添加memoryBook
@@ -43,13 +54,28 @@ public class MemoryBookServiceImpl implements MemoryBookService {
      * @param id
      * @return
      */
+    @Transactional
     public int deleteMemoryBook(int id) {
-        //删除纪念册步骤
-        // 1、删除纪念册中每个片段的评论
-        // 2、删除纪念册的每个片段
-        // 3、删除纪念册中的好友
-        // 4、删除纪念册
-        return memoryBookDao.deleteMemoryBook(id);
+
+        List<Integer> a=momentDao.findMomentIdBybId(id);//获取片段表的id
+        for (int i=0;i<a.size();i++) {
+            int mId=a.get(i);
+            commentDao.deleteCommentByMid(mId);
+            momentImageDao.deleteImageByMId(mId);
+            momentDao.deleteByMomentId(mId);
+        }
+        friendDao.deleteAllFriendByBid(id); //删除纪念册的所有成员
+        int result=0;
+        try {
+            if (memoryBookDao.deleteMemoryBook(id) == 1) {
+                result = 1;
+            } else {
+                throw new MyThrowException("delete_failure");
+            }
+        } catch (MyThrowException e) {
+            throw e;
+        }
+        return result;
     }
 
     /**

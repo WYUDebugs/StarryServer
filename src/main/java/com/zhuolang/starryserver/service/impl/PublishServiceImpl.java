@@ -2,6 +2,7 @@ package com.zhuolang.starryserver.service.impl;
 
 import com.zhuolang.starryserver.dao.*;
 import com.zhuolang.starryserver.dto.ResultDto;
+import com.zhuolang.starryserver.entity.PublicComment;
 import com.zhuolang.starryserver.entity.Publish;
 import com.zhuolang.starryserver.entity.PublishDto;
 import com.zhuolang.starryserver.exception.MyThrowException;
@@ -27,6 +28,8 @@ public class PublishServiceImpl implements PublishService {
     private PublishGoodDao publishGoodDao;
     @Autowired
     private PublishConcernDao publishConcernDao;
+    @Autowired
+    private PublicCommentDao commentDao;
 
     /**
      * 发布帖子
@@ -128,18 +131,24 @@ public class PublishServiceImpl implements PublishService {
      * @param id
      * @return
      */
+    @Transactional
     @Override
-    public ResultDto deletePublisher(int id) {
-        //先删除关联的外表
+    public int deletePublish(int id) {
         publishImageDao.deleteImageByPublishId(id);  //删除图片的信息
         publishGoodDao.deleteByPublishId(id); //删除点赞的信息
         publishConcernDao.deleteByPublishId(id); //删除关注的信息
-        int result = publishDao.deletePublish(id); //再删除主表
-        if (result == 1) {
-            return new ResultDto(200, "delete_success");
-        } else {
-            return new ResultDto(200, "delete_success");
+        commentDao.dleCommentByPId(id); //删除评论信息
+        int result=0;
+        try {
+            if (publishDao.deletePublish(id) == 1) {
+                result = 1;
+            } else {
+                throw new MyThrowException("delete_failure");
+            }
+        } catch (MyThrowException e) {
+            throw e;
         }
+        return result;
     }
 
     /**

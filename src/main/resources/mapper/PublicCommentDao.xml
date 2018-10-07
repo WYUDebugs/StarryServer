@@ -18,6 +18,12 @@
         FROM public_comment_tab
         WHERE cm_id=#{id}
     </delete>
+    <!--通过publicId删除关于此表的所有评论-->
+    <delete id="dleCommentByPId">
+        DELETE
+        FROM public_comment_tab
+        WHERE public_id=#{pId}
+    </delete>
 
     <!--显示帖子的所有评论-->
     <select id="showAllComment" resultType="com.zhuolang.starryserver.entity.PublicComment">

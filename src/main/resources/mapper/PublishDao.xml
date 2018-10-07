@@ -67,7 +67,7 @@
     <!--通过帖子id更新帖子的评论数,删除评论，评论数-1-->
     <update id="updateCommentNum2" >
         UPDATE public_tab
-        SET  number_of_comments=number_of_comments-1
+        SET  number_of_comments=IF(number_of_comments&lt;1,0,number_of_comments-1)
         WHERE id=#{id}
     </update>
 

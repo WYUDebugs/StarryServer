@@ -14,4 +14,8 @@ public interface MomentDao {
     List<Moment> findMomentListBybId( @Param("bId") int bId);
 
     Moment findMomentBymId(@Param("mId")int mId);
+
+    List<Integer> findMomentIdBybId(@Param("bId")int bId);
+
+    int findBookIdBymId(@Param("mId")int mId);
 }

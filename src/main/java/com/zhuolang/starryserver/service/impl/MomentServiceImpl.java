@@ -1,6 +1,7 @@
 package com.zhuolang.starryserver.service.impl;
 
 import com.zhuolang.starryserver.dao.MemoryBookDao;
+import com.zhuolang.starryserver.dao.MomentCommentDao;
 import com.zhuolang.starryserver.dao.MomentDao;
 import com.zhuolang.starryserver.dao.MomentImageDao;
 import com.zhuolang.starryserver.dto.ResultDto;
@@ -23,6 +24,8 @@ public class MomentServiceImpl implements MomentService{
     private MomentDao momentDao;
     @Autowired
     private MomentImageDao momentImageDao;
+    @Autowired
+    private MomentCommentDao commentDao;
 
 
 
@@ -74,8 +77,11 @@ public class MomentServiceImpl implements MomentService{
 
     @Transactional
     @Override
-    public int deleteByMomentId(int mId,int bId) {
+    public int deleteByMomentId(int mId) {
        int result=0;
+       int bId=momentDao.findBookIdBymId(mId);
+       momentImageDao.deleteImageByMId(mId);
+       commentDao.deleteCommentByMid(mId);
         try {
             if (momentDao.deleteByMomentId(mId) == 1) {
                 if (memoryBookDao.updateMomentCount2(bId) == 1) {
@@ -84,7 +90,7 @@ public class MomentServiceImpl implements MomentService{
                     throw new MyThrowException("update_momentCount_failure");
                 }
             } else {
-                throw new MyThrowException("delete_comment_failure");
+                throw new MyThrowException("delete_moment_failure");
             }
         } catch (MyThrowException e) {
             throw e;

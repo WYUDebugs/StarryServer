@@ -34,7 +34,7 @@ public interface PublishService {
     List<List<Publish>> showPostDESC(int publisher);
 
 
-    ResultDto deletePublisher(int id);
+    int deletePublish(int id);
 
     /**
      * 访问个人主页时会用到

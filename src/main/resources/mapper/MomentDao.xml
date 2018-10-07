@@ -16,6 +16,18 @@
         WHERE id=#{mId}
     </delete>
 
+    <select id="findBookIdBymId" resultType="int">
+        SELECT book_id
+        FROM moment_tab
+        WHERE id=#{mId}
+    </select>
+
+    <select id="findMomentIdBybId" resultType="Integer">
+        SELECT id
+        FROM moment_tab
+        WHERE book_id=#{bId}
+    </select>
+
     <resultMap type="com.zhuolang.starryserver.entity.Moment" id="momentResult">
         <id column="id" property="id"/>
         <result column="sender" property="sender"/>

@@ -4,6 +4,7 @@ import com.zhuolang.starryserver.dto.ResultDto;
 import com.zhuolang.starryserver.entity.MemoryBook;
 import com.zhuolang.starryserver.entity.MemoryBookDto;
 import com.zhuolang.starryserver.exception.BaseExceptionHandleAction;
+import com.zhuolang.starryserver.exception.MyThrowException;
 import com.zhuolang.starryserver.service.MemoryBookService;
 import com.zhuolang.starryserver.utils.FileUploadUtil;
 import com.zhuolang.starryserver.utils.TimeUtil;
@@ -163,17 +164,26 @@ public class MemoryBookController  extends BaseExceptionHandleAction {
     @ResponseBody//将返回数据处理为json
     @RequestMapping(value = "/deleteMemoryBook")
     public ResultDto deleteMemoryBook(HttpServletRequest request) {
-        int id = parseInt(request.getParameter("id"));
+        int id = parseInt(request.getParameter("id"));//获取纪念册的id
 
         //找不到该memoryBook
         if ((memoryBookService.findMemoryBookById(id)) == null) {
             return new ResultDto(200, "memory_book_is_not_exist");
         }
-
-        if ((memoryBookService.deleteMemoryBook(id)) == 1) {
-            return new ResultDto(200, "success", null);
+        int result=0;
+        try {
+            result=memoryBookService.deleteMemoryBook(id);
+        }catch (MyThrowException e) {
+            System.out.println("异常捕捉：MyThrowException：" + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("异常捕捉：Exception：" + e.getMessage());
+            e.printStackTrace();
+        }
+        if (result == 1) {
+            return new ResultDto(200, "delete_success", null);
         } else {
-            return new ResultDto(200, "fail", null);
+            return new ResultDto(200, "delete_failure", null);
         }
     }
 

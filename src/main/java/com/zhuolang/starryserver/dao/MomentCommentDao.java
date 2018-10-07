@@ -10,4 +10,6 @@ public interface MomentCommentDao {
     int addMomentComment(@Param("mComment")MomentComment mComment);
 
     List<MomentComment> showComments(@Param("mId")int mId);
+
+    int deleteCommentByMid(@Param("mId")int mId);
 }
