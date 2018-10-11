@@ -36,17 +36,18 @@ public class MomentServiceImpl implements MomentService{
             if (momentDao.installMoment(moment)==1) {
                 int momentId = moment.getId();
                 int bookId=moment.getBookId();
-                for (int i = 0; i < imageList.size(); i++) {
-                    if (momentImageDao.addMomentImage(momentId,imageList.get(i))==1){
-                        if (memoryBookDao.updateMomentCount(bookId) == 1) {
+                if (memoryBookDao.updateMomentCount(bookId) == 1) {
+                    for (int i = 0; i < imageList.size(); i++) {
+                        if (momentImageDao.addMomentImage(momentId,imageList.get(i))==1){
 
                         } else {
-                            throw new MyThrowException("update_momentCount_failure");
+                            throw new MyThrowException("install_image_failure");
                         }
-                    } else {
-                        throw new MyThrowException("install_image_failure");
                     }
+                } else {
+                    throw new MyThrowException("update_momentCount_failure");
                 }
+
             } else {
                 throw new MyThrowException("install_moment_failure");
             }
